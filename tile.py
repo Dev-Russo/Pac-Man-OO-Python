@@ -1,6 +1,7 @@
 import pygame
 from settings import *
 from gamemap import *
+from animations import *
 
 class Tile:
     def __init__(self, screentile) -> None:
@@ -10,6 +11,7 @@ class Tile:
         self.__num1 = ((ALTURA - 50 ) // 32)
         ##Dividido por 30 pois é a quantidade de colunas que são necessarias
         self.__num2 = (LARGURA // 30)
+        self.animation = Animation()
    
     def getNum1(self):
         return self.__num1
@@ -29,6 +31,7 @@ class Tile:
     def draw_board(self):
         self.getNum1()
         self.getNum2()
+        self.animation.up_counter()
         ##loop para cada linha
         for i in range(len(self.getLevel())):
             ##loop para cada coluna dentro da linha especifica
@@ -36,7 +39,7 @@ class Tile:
                 ##A conta faz o ponto ficar no meio da tela
                 if self.getLevel()[i][j] == 1:
                     pygame.draw.circle(self.getScreentile(), WHITE, (j*self.getNum2() + (0.5*self.getNum2()), i*self.getNum1() + (0.5*self.getNum1())), 4) 
-                if self.getLevel()[i][j] == 2:
+                if self.getLevel()[i][j] == 2 and not self.animation.getFlink():
                     pygame.draw.circle(self.getScreentile(), WHITE, (j*self.getNum2() + (0.5*self.getNum2()), i*self.getNum1() + (0.5*self.getNum1())), 10)
                 ##A conta faz com que o risco vertical fique no meio da tela e desça de cima para baixo na outra é horizontal da esquerda para direita
                 if self.getLevel()[i][j] == 3:

@@ -1,3 +1,4 @@
+from animations import *
 from settings import *
 from character import *
 import pygame
@@ -7,7 +8,7 @@ class Player(Character):
         super().__init__(character_x = 450, character_y= 663)
         self.__screencharacter = screencharacter
         self.__direction = 0
-        self.__counter = 0
+        self.animation = Animation()
     
     def getScreencharacter(self):
         return self.__screencharacter
@@ -15,32 +16,23 @@ class Player(Character):
     def getDirection(self):
         return self.__direction
     
-    def getCounter(self):
-        return self.__counter
+    def setDirection(self, value):
+        self.__direction = value
     
-    def setCounter(self, value):
-        self.__counter = value
-    
-    #incrementa Counter para controlar a taxa de reprodução e por quanto tempo ele vai fazer a animação de abrir e fechar a boca
-    def upCounter(self):
-        if self.getCounter() < 19:
-            self.setCounter(self.getCounter() + 1)
-        else:
-            self.setCounter(0)
     
     def draw_player(self, player_images):
         # 0-Direita, 1-Esquerda, 2-Cima, 3-Baixo
         if self.getDirection() == 0:
-            self.getScreencharacter().blit(player_images[self.getCounter() // 5], (self.getCharacter_x(), self.getCharacter_y()))
+            self.getScreencharacter().blit(player_images[self.animation.getCounter() // 5], (self.getCharacter_x(), self.getCharacter_y()))
         elif self.getDirection() == 1:
             #Da um flip na imagem horizontalmente
-            flipped_image = pygame.transform.flip(player_images[self.getCounter() // 5], True, False)
+            flipped_image = pygame.transform.flip(player_images[self.animation.getCounter() // 5], True, False)
             self.getScreencharacter().blit(flipped_image, (self.getCharacter_x(), self.getCharacter_y()))
         elif self.getDirection() == 2:
             #Rotaciona para cima e para baixo
-            rotated_image = pygame.transform.rotate(player_images[self.getCounter() // 5], 90)
+            rotated_image = pygame.transform.rotate(player_images[self.animation.getCounter() // 5], 90)
             self.getScreencharacter().blit(rotated_image, (self.getCharacter_x(), self.getCharacter_y()))
         elif self.getDirection() == 3:
-            rotated_image = pygame.transform.rotate(player_images[self.getCounter() // 5], 270)
+            rotated_image = pygame.transform.rotate(player_images[self.animation.getCounter() // 5], 270)
             self.getScreencharacter().blit(rotated_image, (self.getCharacter_x(), self.getCharacter_y()))
-        self.upCounter()
+        self.animation.up_counter()

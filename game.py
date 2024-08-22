@@ -36,6 +36,19 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.setRun(False)
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RIGHT:
+                        self.player.setDirection(0)
+                    elif event.key == pygame.K_LEFT:
+                        self.player.setDirection(1)
+                    elif event.key == pygame.K_UP:
+                        self.player.setDirection(2)
+                    elif event.key == pygame.K_DOWN:
+                        self.player.setDirection(3)
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.setRun(False)
 
             self.tile.draw_board()
             self.player.draw_player(PLAYER_IMAGES)
