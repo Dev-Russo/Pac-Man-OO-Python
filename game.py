@@ -1,6 +1,7 @@
 import pygame
 from tile import *
 from settings import *
+from player import *
 
 pygame.init()
 
@@ -35,6 +36,8 @@ class Game:
                     self.setRun(False)
 
             self.tile.draw_board()
+            player = Player(self.getScreen())
+            player.draw_player(PLAYER_IMAGES)
         
             pygame.display.flip()
         
