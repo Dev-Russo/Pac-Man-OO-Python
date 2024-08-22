@@ -11,18 +11,23 @@ class Player(Character):
     
     def getScreencharacter(self):
         return self.__screencharacter
-
-
+    
     def getDirection(self):
         return self.__direction
     
-  
     def getCounter(self):
         return self.__counter
     
-
-
-            
+    def setCounter(self, value):
+        self.__counter = value
+    
+    #incrementa Counter para controlar a taxa de reprodução e por quanto tempo ele vai fazer a animação de abrir e fechar a boca
+    def upCounter(self):
+        if self.getCounter() < 19:
+            self.setCounter(self.getCounter() + 1)
+        else:
+            self.setCounter(0)
+    
     def draw_player(self, player_images):
         # 0-Direita, 1-Esquerda, 2-Cima, 3-Baixo
         if self.getDirection() == 0:
@@ -32,8 +37,10 @@ class Player(Character):
             flipped_image = pygame.transform.flip(player_images[self.getCounter() // 5], True, False)
             self.getScreencharacter().blit(flipped_image, (self.getCharacter_x(), self.getCharacter_y()))
         elif self.getDirection() == 2:
+            #Rotaciona para cima e para baixo
             rotated_image = pygame.transform.rotate(player_images[self.getCounter() // 5], 90)
             self.getScreencharacter().blit(rotated_image, (self.getCharacter_x(), self.getCharacter_y()))
         elif self.getDirection() == 3:
             rotated_image = pygame.transform.rotate(player_images[self.getCounter() // 5], 270)
             self.getScreencharacter().blit(rotated_image, (self.getCharacter_x(), self.getCharacter_y()))
+        self.upCounter()

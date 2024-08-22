@@ -11,6 +11,7 @@ class Game:
         self.__timer = pygame.time.Clock()
         self.__run = True
         self.tile = Tile(self.__screen)
+        self.player = Player(self.__screen)
 
 
     def getScreen(self):
@@ -28,6 +29,7 @@ class Game:
     
     def rodar(self):
         while self.getRun():
+            
             self.getTimer().tick(FPS)
             self.getScreen().fill('black')
 
@@ -36,8 +38,7 @@ class Game:
                     self.setRun(False)
 
             self.tile.draw_board()
-            player = Player(self.getScreen())
-            player.draw_player(PLAYER_IMAGES)
+            self.player.draw_player(PLAYER_IMAGES)
         
             pygame.display.flip()
         

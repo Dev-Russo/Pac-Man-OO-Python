@@ -5,7 +5,7 @@ LARGURA = 900
 ALTURA = 950
 FPS = 60
 WHITE = 'white'
-BLUE = 'red'
+BLUE = 'blue'
 PI = math.pi
 #Lista da imagens de player
 PLAYER_IMAGES = []
