@@ -21,13 +21,13 @@ class Player(Character):
     # Verifica se o evento é um evento de teclado antes de acessar 'key'
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
-                self.setDirection(0)  # Direita
+                self.setDirection_comand(0)  # Direita
             elif event.key == pygame.K_LEFT:
-                self.setDirection(1)  # Esquerda
+                self.setDirection_comand(1)  # Esquerda
             elif event.key == pygame.K_DOWN:
-                self.setDirection(2)  # Baixo
+                self.setDirection_comand(2)  # Baixo
             elif event.key == pygame.K_UP:
-                self.setDirection(3)  # Cima
+                self.setDirection_comand(3)  # Cima
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT and self.getDirection_comand() == 0:
                 self.setDirection_comand(self.getDirection())
@@ -74,31 +74,41 @@ class Player(Character):
 
         if centerx // 30 < 29:
             if self.getDirection() == 0:  # Direita
-                if self.tile.getLevel()[centery//self.tile.getNum1()][(centerx + num3) // self.tile.getNum2()] < 3:
-                    turns[0] = True
-            if self.getDirection() == 1:  # Esquerda
-                if self.tile.getLevel()[centery//self.tile.getNum1()][(centerx - num3) // self.tile.getNum2()] < 3:
-                    turns[1] = True
-            if self.getDirection() == 2:  # Baixo
-                if self.tile.getLevel()[(centery + num3)//self.tile.getNum1()][centerx // self.tile.getNum2()] < 3:
-                    turns[2] = True
-            if self.getDirection() == 3:  # Cima
-                if self.tile.getLevel()[(centery - num3)//self.tile.getNum1()][centerx // self.tile.getNum2()] < 3:
-                    turns[3] = True
-
-        # Ajustar para colisões em diagonais ou alinhamentos imperfeitos
-        if self.getDirection() in [2, 3]:  # Movimentação vertical
-            if 12 <= centerx % self.tile.getNum2() <= 18:
-                if self.tile.getLevel()[(centery + num3)//self.tile.getNum1()][centerx // self.tile.getNum2()] < 3:
-                    turns[2] = True
-                if self.tile.getLevel()[(centery - num3)//self.tile.getNum1()][centerx // self.tile.getNum2()] < 3:
-                    turns[3] = True
-        if self.getDirection() in [0, 1]:  # Movimentação horizontal
-            if 12 <= centery % self.tile.getNum1() <= 18:
                 if self.tile.getLevel()[centery // self.tile.getNum1()][(centerx + num3) // self.tile.getNum2()] < 3:
                     turns[0] = True
+            if self.getDirection() == 1:  # Esquerda
                 if self.tile.getLevel()[centery // self.tile.getNum1()][(centerx - num3) // self.tile.getNum2()] < 3:
                     turns[1] = True
+            if self.getDirection() == 2:  # Baixo
+                if self.tile.getLevel()[(centery + num3) // self.tile.getNum1()][centerx // self.tile.getNum2()] < 3:
+                    turns[2] = True
+            if self.getDirection() == 3:  # Cima
+                if self.tile.getLevel()[(centery - num3) // self.tile.getNum1()][centerx // self.tile.getNum2()] < 3:
+                    turns[3] = True
+
+        # Ajuste para movimentos diagonais ou alinhamentos imperfeitos
+            if self.getDirection() in [2, 3]:  # Movimentação vertical
+                if 12 <= centerx % self.tile.getNum2() <= 18:
+                    if self.tile.getLevel()[(centery + num3) // self.tile.getNum1()][centerx // self.tile.getNum2()] < 3:
+                        turns[2] = True
+                    if self.tile.getLevel()[(centery - num3) // self.tile.getNum1()][centerx // self.tile.getNum2()] < 3:
+                        turns[3] = True
+                if 12 <= centery % self.tile.getNum1() <= 18:
+                    if self.tile.getLevel()[centery // self.tile.getNum1()][(centerx - self.tile.getNum2()) // self.tile.getNum2()] < 3:
+                        turns[1] = True
+                    if self.tile.getLevel()[centery // self.tile.getNum1()][(centerx + self.tile.getNum2()) // self.tile.getNum2()] < 3:
+                        turns[0] = True
+            if self.getDirection() in [0, 1]:  # Movimentação horizontal
+                if 12 <= centerx % self.tile.getNum2() <= 18:
+                    if self.tile.getLevel()[(centery + self.tile.getNum1()) // self.tile.getNum1()][centerx // self.tile.getNum2()] < 3:
+                        turns[2] = True
+                    if self.tile.getLevel()[(centery - self.tile.getNum1()) // self.tile.getNum1()][centerx // self.tile.getNum2()] < 3:
+                        turns[3] = True
+                if 12 <= centery % self.tile.getNum1() <= 18:
+                    if self.tile.getLevel()[centery // self.tile.getNum1()][(centerx - num3) // self.tile.getNum2()] < 3:
+                        turns[1] = True
+                    if self.tile.getLevel()[centery // self.tile.getNum1()][(centerx + num3) // self.tile.getNum2()] < 3:
+                        turns[0] = True
         else:
             turns[0] = True
             turns[1] = True
