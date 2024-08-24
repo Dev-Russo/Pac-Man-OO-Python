@@ -11,6 +11,21 @@ class Character:
         self.__direction = 0
         self.__direction_comand = None  # Inicializa o comando de direção
         self.__turns_allowed = [False, False, False, False]
+        self.__startup_counter = 0
+        self.__moving = False
+
+    
+    def getStartup_counter(self):
+        return self.__startup_counter
+    
+    def setStartup_counter(self, value):
+        self.__startup_counter = value
+
+    def getMoving(self):
+        return self.__moving
+    
+    def setMoving(self, value):
+        self.__moving = value
 
     def getTurns_allowed(self):
         return self.__turns_allowed

@@ -4,19 +4,57 @@ from settings import *
 from character import *
 from tile import *
 from scoremanager import *
+from ghost import *
 
 class Player(Character):
     def __init__(self, screencharacter) -> None:
         super().__init__(character_x=450, character_y=663, character_speed=2)
         self.__screencharacter = screencharacter
-        self.animation = Animation()
         self.setCenter_x(self.getCharacter_x() + 23)
         self.setCenter_y(self.getCharacter_y() + 24)
+        self.__powerup = False
+        self.__power_count = 0
+        self.__lives = 3
         self.tile = Tile(self.__screencharacter)
         self.scoreManager = ScoreManager() 
+        self.animation = Animation()
 
     def getScreencharacter(self):
         return self.__screencharacter
+    
+    def getLives(self):
+        return self.__lives
+    
+    def setLives(self, value):
+        self.__lives = value
+    
+    
+    def getPowerup(self):
+        return self.__powerup
+    
+    def setPowerup(self, value):
+        self.__powerup = value
+    
+    def getPower_count(self):
+        return self.__power_count
+    
+    def setPower_count(self, value):
+        self.__power_count = value
+
+
+    def powerup_up_and_start_game(self):
+        if self.getPowerup() and self.getPower_count() < 600:
+            self.setPower_count(self.getPower_count() + 1)
+        elif self.getPowerup() and self.getPower_count() >= 600:
+            self.setPowerup(False)
+            self.setPower_count(0)
+            #ghost.setEaten(False)    
+        if self.getStartup_counter() < 180:
+            self.setMoving(False)
+            self.setStartup_counter(self.getStartup_counter() + 1)
+        else:
+            self.setMoving(True)           
+        
 
     def check_keyboard(self, event):
     # Verifica se o evento é um evento de teclado antes de acessar 'key'
@@ -116,7 +154,8 @@ class Player(Character):
 
         return turns
 
-    def check_colision(self):
+    #Passar ghost como parametro
+    def check_colision(self, ): 
         if 0 < self.getCharacter_x() < 870:
             if self.tile.getLevel()[self.getCenter_y() // self.tile.getNum1()][self.getCenter_x() // self.tile.getNum2()] == 1:
                 self.tile.getLevel()[self.getCenter_y() // self.tile.getNum1()][self.getCenter_x() // self.tile.getNum2()] = 0
@@ -124,4 +163,9 @@ class Player(Character):
             if self.tile.getLevel()[self.getCenter_y() // self.tile.getNum1()][self.getCenter_x() // self.tile.getNum2()] == 2:
                 self.tile.getLevel()[self.getCenter_y() // self.tile.getNum1()][self.getCenter_x() // self.tile.getNum2()] = 0
                 self.scoreManager.setScore(self.scoreManager.getScore() + 50)
-                
+                self.setPowerup(True)
+                self.setPower_count(0)
+                #ghost.setEaten(False)  
+
+
+    

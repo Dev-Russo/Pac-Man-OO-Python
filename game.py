@@ -2,6 +2,7 @@ import pygame
 from tile import *
 from settings import *
 from player import *
+from ghost import *
 
 pygame.init()
 
@@ -13,6 +14,7 @@ class Game:
         self.tile = Tile(self.__screen)
         self.player = Player(self.__screen)
         self.font = pygame.font.SysFont(None, 36)
+        #self.ghost = Ghost()
 
     def getScreen(self):
         return self.__screen
@@ -33,9 +35,11 @@ class Game:
             self.tile.draw_board()
             self.player.draw_player(PLAYER_IMAGES)
             self.player.setTurns_allowed(self.player.check_position(self.player.getCenter_x(), self.player.getCenter_y()))
-            self.player.move(self.player.getCharacter_x(), self.player.getCharacter_y())
+            self.player.powerup_up_and_start_game()
+            if self.player.getMoving():
+                self.player.move(self.player.getCharacter_x(), self.player.getCharacter_y())
             self.player.check_colision()
-            self.player.scoreManager.draw_misc(self.getScreen(), self.font)
+            self.player.scoreManager.draw_misc(self.getScreen(), self.font, self.player)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
