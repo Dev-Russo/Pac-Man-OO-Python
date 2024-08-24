@@ -124,4 +124,4 @@ class Player(Character):
             if self.tile.getLevel()[self.getCenter_y() // self.tile.getNum1()][self.getCenter_x() // self.tile.getNum2()] == 2:
                 self.tile.getLevel()[self.getCenter_y() // self.tile.getNum1()][self.getCenter_x() // self.tile.getNum2()] = 0
                 self.scoreManager.setScore(self.scoreManager.getScore() + 50)
-            print(self.scoreManager.getScore())
+                

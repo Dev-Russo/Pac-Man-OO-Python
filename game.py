@@ -12,6 +12,7 @@ class Game:
         self.__run = True
         self.tile = Tile(self.__screen)
         self.player = Player(self.__screen)
+        self.font = pygame.font.SysFont(None, 36)
 
     def getScreen(self):
         return self.__screen
@@ -34,6 +35,7 @@ class Game:
             self.player.setTurns_allowed(self.player.check_position(self.player.getCenter_x(), self.player.getCenter_y()))
             self.player.move(self.player.getCharacter_x(), self.player.getCharacter_y())
             self.player.check_colision()
+            self.player.scoreManager.draw_misc(self.getScreen(), self.font)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
