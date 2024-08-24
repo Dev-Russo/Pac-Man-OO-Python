@@ -3,6 +3,7 @@ from animations import *
 from settings import *
 from character import *
 from tile import *
+from scoremanager import *
 
 class Player(Character):
     def __init__(self, screencharacter) -> None:
@@ -12,7 +13,7 @@ class Player(Character):
         self.setCenter_x(self.getCharacter_x() + 23)
         self.setCenter_y(self.getCharacter_y() + 24)
         self.tile = Tile(self.__screencharacter)
-        self.__direction_comand = None
+        self.scoreManager = ScoreManager() 
 
     def getScreencharacter(self):
         return self.__screencharacter
@@ -39,7 +40,7 @@ class Player(Character):
                 self.setDirection_comand(self.getDirection())
 
 
-    def verify_wall(self):
+    def change_direction(self):
         # Atualiza a direção do jogador com base no comando de direção
         for i in range(4):
             if self.getDirection_comand() == i and self.getTurns_allowed()[i]:
@@ -115,3 +116,12 @@ class Player(Character):
 
         return turns
 
+    def check_colision(self):
+        if 0 < self.getCharacter_x() < 870:
+            if self.tile.getLevel()[self.getCenter_y() // self.tile.getNum1()][self.getCenter_x() // self.tile.getNum2()] == 1:
+                self.tile.getLevel()[self.getCenter_y() // self.tile.getNum1()][self.getCenter_x() // self.tile.getNum2()] = 0
+                self.scoreManager.setScore(self.scoreManager.getScore() + 10)
+            if self.tile.getLevel()[self.getCenter_y() // self.tile.getNum1()][self.getCenter_x() // self.tile.getNum2()] == 2:
+                self.tile.getLevel()[self.getCenter_y() // self.tile.getNum1()][self.getCenter_x() // self.tile.getNum2()] = 0
+                self.scoreManager.setScore(self.scoreManager.getScore() + 50)
+            print(self.scoreManager.getScore())

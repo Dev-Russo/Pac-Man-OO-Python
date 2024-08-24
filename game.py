@@ -33,13 +33,13 @@ class Game:
             self.player.draw_player(PLAYER_IMAGES)
             self.player.setTurns_allowed(self.player.check_position(self.player.getCenter_x(), self.player.getCenter_y()))
             self.player.move(self.player.getCharacter_x(), self.player.getCharacter_y())
-            self.player.verify_wall()
+            self.player.check_colision()
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.setRun(False)
                 self.player.check_keyboard(event)
-
+            self.player.change_direction()
         
             pygame.display.flip()
         
