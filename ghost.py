@@ -10,7 +10,6 @@ class Ghost(Character):
         self.__eaten = False
         self.__targets = None
         self.__dead = False
-        self.__inthebox = False
         self.__img = img
         self.__inthebox = True
         self.__rect = pygame.rect.Rect((self.getCenter_x() - 18, self.getCenter_y() - 18), (36, 36))
@@ -50,7 +49,13 @@ class Ghost(Character):
 
     def setInthebox(self, value):
         self.__inthebox = value
+        
+    def move_ghost(self):
+        pass
 
+    def update_target(self, playerx, playery):
+        self.setTarget([playerx, playery])
+    
     def draw(self, screen, player):
         if (not player.getPowerup() and not self.getDead()) or (self.getEaten() and player.getPowerup() and not self.getDead()):
             screen.blit(self.getImage(), (self.getCharacter_x(), self.getCharacter_y()))
@@ -67,7 +72,6 @@ class Ghost(Character):
         num3 = 15
         turns = [False, False, False, False]
     
-    # Se a posição do fantasma estiver dentro dos limites do mapa
         if 0 < self.getCenter_x() // 30 < 29:
             # Verificar movimento para cima
             if tile.getLevel()[(self.getCenter_y() - num3) // num1][self.getCenter_x() // num2] < 3 \
@@ -149,5 +153,3 @@ class Ghost(Character):
             self.setInthebox(False)
 
         self.setTurns_allowed(turns)
-
-

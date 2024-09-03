@@ -11,5 +11,3 @@ class Pinky(Ghost):
     def draw(self, screen, player):
         return super().draw(screen, player)
     
-    def check_collision(self, tile):
-        return super().check_collision(tile)
