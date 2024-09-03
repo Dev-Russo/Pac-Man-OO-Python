@@ -19,6 +19,9 @@ class Game:
         self.player = Player(self.__screen)
         self.font = pygame.font.SysFont(None, 36)
         self.clyde = Clyde()
+        self.inky = Inky()
+        self.blinky = Blinky()
+        self.pinky = Pinky()
 
     def getScreen(self):
         return self.__screen
@@ -39,18 +42,33 @@ class Game:
             self.tile.draw_board()
             self.player.draw_player(PLAYER_IMAGES)
             self.clyde.draw(self.getScreen(), self.player)
+            self.pinky.draw(self.getScreen(), self.player)
+            self.inky.draw(self.getScreen(), self.player)
+            self.blinky.draw(self.getScreen(), self.player)
             self.player.setTurns_allowed(self.player.check_position(self.player.getCenter_x(), self.player.getCenter_y()))
             self.player.powerup_up_and_start_game()
 
             if self.player.getMoving():
                 self.player.move(self.player.getCharacter_x(), self.player.getCharacter_y())
                 self.clyde.move_ghost()
+                self.pinky.move_ghost()
+                self.inky.move_ghost()
+                self.blinky.move_ghost()
 
             self.player.check_colision()
 
             # Atualizando centerx e centery do fantasma
             self.clyde.update_target(self.player.getCharacter_x(), self.player.getCharacter_y())
             self.clyde.check_collision(self.tile, self.clyde.getCenter_x(), self.clyde.getCenter_y())
+            
+            self.pinky.update_target(self.player.getCharacter_x(), self.player.getCharacter_y())
+            self.pinky.check_collision(self.tile, self.pinky.getCenter_x(), self.pinky.getCenter_y())
+            
+            self.inky.update_target(self.player.getCharacter_x(), self.player.getCharacter_y())
+            self.inky.check_collision(self.tile, self.inky.getCenter_x(), self.inky.getCenter_y())
+            
+            self.blinky.update_target(self.player.getCharacter_x(), self.player.getCharacter_y())
+            self.blinky.check_collision(self.tile, self.blinky.getCenter_x(), self.blinky.getCenter_y())
 
             self.player.scoreManager.draw_misc(self.getScreen(), self.font, self.player)
 
