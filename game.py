@@ -46,6 +46,10 @@ class Game:
             self.inky.draw(self.getScreen(), self.player)
             self.clyde.draw(self.getScreen(), self.player)
             self.player.setTurns_allowed(self.player.check_position(self.player.getCenter_x(), self.player.getCenter_y()))
+            self.blinky.check_collision(self.tile)
+            self.pinky.check_collision(self.tile)
+            self.inky.check_collision(self.tile)
+            self.clyde.check_collision(self.tile)
             self.player.powerup_up_and_start_game()
             if self.player.getMoving():
                 self.player.move(self.player.getCharacter_x(), self.player.getCharacter_y())
