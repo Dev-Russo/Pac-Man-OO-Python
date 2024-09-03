@@ -3,7 +3,10 @@ from settings import *
 from ghost import *
 from character import *
 
-class CLyde(Ghost):
+class Clyde(Ghost):
     def __init__(self) -> None:
-        super().__init__(character_x=440, character_y=438, character_speed=2)
+        super().__init__(character_x=440, character_y=438, character_speed=2, img=clyde_img)
         self.setDirection(2)
+
+    def draw(self, screen, player):
+        return super().draw(screen, player)

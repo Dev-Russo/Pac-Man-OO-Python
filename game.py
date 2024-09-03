@@ -3,6 +3,10 @@ from tile import *
 from settings import *
 from player import *
 from ghost import *
+from blinky import *
+from pinky import *
+from inky import *
+from clyde import *
 
 pygame.init()
 
@@ -14,7 +18,10 @@ class Game:
         self.tile = Tile(self.__screen)
         self.player = Player(self.__screen)
         self.font = pygame.font.SysFont(None, 36)
-        #self.ghost = Ghost()
+        self.blinky = Blinky()
+        self.pinky = Pinky()
+        self.inky = Inky()
+        self.clyde = Clyde()
 
     def getScreen(self):
         return self.__screen
@@ -34,6 +41,10 @@ class Game:
             self.getScreen().fill('black')
             self.tile.draw_board()
             self.player.draw_player(PLAYER_IMAGES)
+            self.blinky.draw(self.getScreen(), self.player)
+            self.pinky.draw(self.getScreen(), self.player)
+            self.inky.draw(self.getScreen(), self.player)
+            self.clyde.draw(self.getScreen(), self.player)
             self.player.setTurns_allowed(self.player.check_position(self.player.getCenter_x(), self.player.getCenter_y()))
             self.player.powerup_up_and_start_game()
             if self.player.getMoving():
