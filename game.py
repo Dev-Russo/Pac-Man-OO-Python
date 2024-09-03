@@ -18,9 +18,6 @@ class Game:
         self.tile = Tile(self.__screen)
         self.player = Player(self.__screen)
         self.font = pygame.font.SysFont(None, 36)
-        self.blinky = Blinky()
-        self.pinky = Pinky()
-        self.inky = Inky()
         self.clyde = Clyde()
 
     def getScreen(self):
@@ -41,18 +38,20 @@ class Game:
             self.getScreen().fill('black')
             self.tile.draw_board()
             self.player.draw_player(PLAYER_IMAGES)
-            self.blinky.draw(self.getScreen(), self.player)
-            self.pinky.draw(self.getScreen(), self.player)
-            self.inky.draw(self.getScreen(), self.player)
             self.clyde.draw(self.getScreen(), self.player)
             self.player.setTurns_allowed(self.player.check_position(self.player.getCenter_x(), self.player.getCenter_y()))
             self.player.powerup_up_and_start_game()
+
             if self.player.getMoving():
                 self.player.move(self.player.getCharacter_x(), self.player.getCharacter_y())
                 self.clyde.move_ghost()
+
             self.player.check_colision()
+
+            # Atualizando centerx e centery do fantasma
             self.clyde.update_target(self.player.getCharacter_x(), self.player.getCharacter_y())
-            self.clyde.check_collision(self.tile)
+            self.clyde.check_collision(self.tile, self.clyde.getCenter_x(), self.clyde.getCenter_y())
+
             self.player.scoreManager.draw_misc(self.getScreen(), self.font, self.player)
 
             for event in pygame.event.get():

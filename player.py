@@ -27,8 +27,7 @@ class Player(Character):
     
     def setLives(self, value):
         self.__lives = value
-    
-    
+        
     def getPowerup(self):
         return self.__powerup
     
@@ -40,7 +39,6 @@ class Player(Character):
     
     def setPower_count(self, value):
         self.__power_count = value
-
 
     def powerup_up_and_start_game(self):
         if self.getPowerup() and self.getPower_count() < 600:
@@ -54,8 +52,7 @@ class Player(Character):
             self.setStartup_counter(self.getStartup_counter() + 1)
         else:
             self.setMoving(True)           
-        
-
+    
     def check_keyboard(self, event):
     # Verifica se o evento é um evento de teclado antes de acessar 'key'
         if event.type == pygame.KEYDOWN:
@@ -76,7 +73,6 @@ class Player(Character):
                 self.setDirection_comand(self.getDirection())
             elif event.key == pygame.K_UP and self.getDirection_comand() == 3:
                 self.setDirection_comand(self.getDirection())
-
 
     def change_direction(self):
         # Atualiza a direção do jogador com base no comando de direção
@@ -151,8 +147,9 @@ class Player(Character):
         else:
             turns[0] = True
             turns[1] = True
-
+        #print(centerx)
         return turns
+        
 
     #Passar ghost como parametro
     def check_colision(self, ): 

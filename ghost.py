@@ -5,12 +5,12 @@ from tile import *
 class Ghost(Character):
     def __init__(self, character_x, character_y, character_speed, img) -> None:
         super().__init__(character_x, character_y, character_speed)
-        self.setCenter_x(self.getCharacter_x() + 5)
-        self.setCenter_y(self.getCharacter_y() + 5)
         self.__eaten = False
         self.__targets = None
         self.__dead = False
         self.__img = img
+        self.setCenter_x(self.getCharacter_x() + 22)
+        self.setCenter_y(self.getCharacter_y() + 22)
         self.__inthebox = True
         self.__rect = pygame.rect.Rect((self.getCenter_x() - 18, self.getCenter_y() - 18), (36, 36))
     
@@ -65,79 +65,83 @@ class Ghost(Character):
             screen.blit(dead_img, (self.getCharacter_x(), self.getCharacter_y()))
         
         self.setRect(pygame.rect.Rect((self.getCenter_x() - 18, self.getCenter_y() - 18), (36 , 36))) 
-    
-    def check_collision(self, tile):
+
+    def update_center(self):
+        self.setCenter_x(self.getCharacter_x() + 15)
+        self.setCenter_y(self.getCharacter_y() + 15)
+        
+    def check_collision(self, tile, centerx , centery):
         num1 = ((ALTURA - 50) // 32)
         num2 = (LARGURA // 30)
         num3 = 15
         turns = [False, False, False, False]
     
-        if 0 < self.getCenter_x() // 30 < 29:
+        if 0 < centerx // 30 < 29:
             # Verificar movimento para cima
-            if tile.getLevel()[(self.getCenter_y() - num3) // num1][self.getCenter_x() // num2] < 3 \
-                or (tile.getLevel()[(self.getCenter_y() - num3) // num1][self.getCenter_x() // num2] == 9 and (
+            if tile.getLevel()[(centery - num3) // num1][centerx // num2] < 3 \
+                or (tile.getLevel()[(centery - num3) // num1][centerx // num2] == 9 and (
                     self.getInthebox() or self.getDead())):
                 turns[2] = True
         
             # Verificar movimento para baixo
-            if tile.getLevel()[(self.getCenter_y() + num3) // num1][self.getCenter_x() // num2] < 3 \
-                or (tile.getLevel()[(self.getCenter_y() + num3) // num1][self.getCenter_x() // num2] == 9 and (
+            if tile.getLevel()[(centery + num3) // num1][centerx // num2] < 3 \
+                or (tile.getLevel()[(centery + num3) // num1][centerx // num2] == 9 and (
                     self.getInthebox() or self.getDead())):
                 turns[3] = True
         
             # Verificar movimento para a esquerda
-            if tile.getLevel()[self.getCenter_y() // num1][(self.getCenter_x() - num3) // num2] < 3 \
-                or (tile.getLevel()[self.getCenter_y() // num1][(self.getCenter_x() - num3) // num2] == 9 and (
+            if tile.getLevel()[centery // num1][(centerx - num3) // num2] < 3 \
+                or (tile.getLevel()[centery // num1][(centerx - num3) // num2] == 9 and (
                     self.getInthebox() or self.getDead())):
                 turns[1] = True
         
             # Verificar movimento para a direita
-            if tile.getLevel()[self.getCenter_y() // num1][(self.getCenter_x() + num3) // num2] < 3 \
-                or (tile.getLevel()[self.getCenter_y() // num1][(self.getCenter_x() + num3) // num2] == 9 and (
+            if tile.getLevel()[centery // num1][(centerx + num3) // num2] < 3 \
+                or (tile.getLevel()[centery // num1][(centerx + num3) // num2] == 9 and (
                     self.getInthebox() or self.getDead())):
                 turns[0] = True
 
             # Correção para movimentação vertical se a direção for para cima ou para baixo
             if self.getDirection() in [2, 3]:  # Cima ou Baixo
-                if 12 <= self.getCenter_x() % num2 <= 18:
-                    if tile.getLevel()[(self.getCenter_y() + num3) // num1][self.getCenter_x() // num2] < 3 \
-                        or (tile.getLevel()[(self.getCenter_y() + num3) // num1][self.getCenter_x() // num2] == 9 and (
+                if 12 <= centerx % num2 <= 18:
+                    if tile.getLevel()[(centery + num3) // num1][centerx // num2] < 3 \
+                        or (tile.getLevel()[(centery + num3) // num1][centerx // num2] == 9 and (
                             self.getInthebox() or self.getDead())):
                         turns[3] = True
-                    if tile.getLevel()[(self.getCenter_y() - num3) // num1][self.getCenter_x() // num2] < 3 \
-                        or (tile.getLevel()[(self.getCenter_y() - num3) // num1][self.getCenter_x() // num2] == 9 and (
+                    if tile.getLevel()[(centery - num3) // num1][centerx // num2] < 3 \
+                        or (tile.getLevel()[(centery - num3) // num1][centerx // num2] == 9 and (
                             self.getInthebox() or self.getDead())):
                         turns[2] = True
 
-                if 12 <= self.getCenter_y() % num1 <= 18:
-                    if tile.getLevel()[self.getCenter_y() // num1][(self.getCenter_x() - num2) // num2] < 3 \
-                        or (tile.getLevel()[self.getCenter_y() // num1][(self.getCenter_x() - num2) // num2] == 9 and (
+                if 12 <= centery % num1 <= 18:
+                    if tile.getLevel()[centery // num1][(centerx - num2) // num2] < 3 \
+                        or (tile.getLevel()[centery // num1][(centerx - num2) // num2] == 9 and (
                             self.getInthebox() or self.getDead())):
                         turns[1] = True
-                    if tile.getLevel()[self.getCenter_y() // num1][(self.getCenter_x() + num2) // num2] < 3 \
-                        or (tile.getLevel()[self.getCenter_y() // num1][(self.getCenter_x() + num2) // num2] == 9 and (
+                    if tile.getLevel()[centery // num1][(centerx + num2) // num2] < 3 \
+                        or (tile.getLevel()[centery // num1][(centerx + num2) // num2] == 9 and (
                             self.getInthebox() or self.getDead())):
                         turns[0] = True
 
             # Correção para movimentação horizontal se a direção for para esquerda ou direita
             if self.getDirection() in [0, 1]:  # Esquerda ou Direita
-                if 12 <= self.getCenter_x() % num2 <= 18:
-                    if tile.getLevel()[(self.getCenter_y() + num3) // num1][self.getCenter_x() // num2] < 3 \
-                        or (tile.getLevel()[(self.getCenter_y() + num3) // num1][self.getCenter_x() // num2] == 9 and (
+                if 12 <= centerx % num2 <= 18:
+                    if tile.getLevel()[(centery + num3) // num1][centerx // num2] < 3 \
+                        or (tile.getLevel()[(centery + num3) // num1][centerx // num2] == 9 and (
                             self.getInthebox() or self.getDead())):
                         turns[3] = True
-                    if tile.getLevel()[(self.getCenter_y() - num3) // num1][self.getCenter_x() // num2] < 3 \
-                        or (tile.getLevel()[(self.getCenter_y() - num3) // num1][self.getCenter_x() // num2] == 9 and (
+                    if tile.getLevel()[(centery - num3) // num1][centerx // num2] < 3 \
+                        or (tile.getLevel()[(centery - num3) // num1][centerx // num2] == 9 and (
                             self.getInthebox() or self.getDead())):
                         turns[2] = True
 
-                if 12 <= self.getCenter_y() % num1 <= 18:
-                    if tile.getLevel()[self.getCenter_y() // num1][(self.getCenter_x() - num3) // num2] < 3 \
-                        or (tile.getLevel()[(self.getCenter_y() + num3) // num1][(self.getCenter_x() - num3) // num2] == 9 and (
+                if 12 <= centery % num1 <= 18:
+                    if tile.getLevel()[centery // num1][(centerx - num3) // num2] < 3 \
+                        or (tile.getLevel()[(centery + num3) // num1][(centerx - num3) // num2] == 9 and (
                             self.getInthebox() or self.getDead())):
                         turns[1] = True
-                    if tile.getLevel()[(self.getCenter_y() - num3) // num1][(self.getCenter_x() + num3) // num2] < 3 \
-                        or (tile.getLevel()[(self.getCenter_y() - num3) // num1][(self.getCenter_x() + num3) // num2] == 9 and (
+                    if tile.getLevel()[(centery - num3) // num1][(centerx + num3) // num2] < 3 \
+                        or (tile.getLevel()[(centery - num3) // num1][(centerx + num3) // num2] == 9 and (
                             self.getInthebox() or self.getDead())):
                         turns[0] = True
 
@@ -153,3 +157,5 @@ class Ghost(Character):
             self.setInthebox(False)
 
         self.setTurns_allowed(turns)
+        print(centery)
+        print(centerx)
