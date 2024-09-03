@@ -5,8 +5,8 @@ from tile import *
 class Ghost(Character):
     def __init__(self, character_x, character_y, character_speed, img) -> None:
         super().__init__(character_x, character_y, character_speed)
-        #self.setCenter_x(self.getCharacter_x() + 5)
-        #self.setCenter_y(self.getCharacter_y() + 5)
+        self.setCenter_x(self.getCharacter_x() + 5)
+        self.setCenter_y(self.getCharacter_y() + 5)
         self.__eaten = False
         self.__targets = None
         self.__dead = False
@@ -53,11 +53,11 @@ class Ghost(Character):
 
     def draw(self, screen, player):
         if (not player.getPowerup() and not self.getDead()) or (self.getEaten() and player.getPowerup() and not self.getDead()):
-            screen.blit(self.getImage(), (self.getCharacter_x(), self.getCenter_y()))
+            screen.blit(self.getImage(), (self.getCharacter_x(), self.getCharacter_y()))
         elif player.getPowerup() and not self.getDead() and not self.getEaten():
-            screen.blit(spooked_img, (self.getCharacter_x(), self.getCenter_y()))
+            screen.blit(spooked_img, (self.getCharacter_x(), self.getCharacter_y()))
         else:
-            screen.blit(dead_img, (self.getCharacter_x(), self.getCenter_y()))
+            screen.blit(dead_img, (self.getCharacter_x(), self.getCharacter_y()))
         
         self.setRect(pygame.rect.Rect((self.getCenter_x() - 18, self.getCenter_y() - 18), (36 , 36))) 
     

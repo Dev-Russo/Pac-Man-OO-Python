@@ -6,7 +6,7 @@ class Character:
         self.__character_x = character_x
         self.__character_y = character_y
         self.__center_x = character_x
-        self.__center_y = character_y
+        self.__center_y = character_y 
         self.__character_speed = character_speed
         self.__direction = 0
         self.__direction_comand = None  # Inicializa o comando de direção
