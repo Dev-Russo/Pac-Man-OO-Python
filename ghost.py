@@ -70,13 +70,12 @@ class Ghost(Character):
                 self.setTarget(return_target)
         else:
             if not self.getDead():
-                if 340 < self.getCharacter_x() < 500 and 400 < self.getCharacter_y() < 500:
+                if 340 < self.getCharacter_x() < 560 and 340 < self.getCharacter_y() < 500:
                     self.setTarget([400, 100])
                 else:
                     self.setTarget([player.getCharacter_x(), player.getCharacter_y()])
             else:
-                self.setTarget(return_target)
-            
+                self.setTarget(return_target)           
     
     def draw(self, screen, player):
         if (not player.getPowerup() and not self.getDead()) or (self.getEaten() and player.getPowerup() and not self.getDead()):
@@ -99,6 +98,8 @@ class Ghost(Character):
         turns = [False, False, False, False]
     
         if 0 < centerx // 30 < 29:
+            if tile.getLevel()[(centery - num3) // num1][centerx // num2] == 9:
+                turns[2] = True
             # Verificar movimento para cima
             if tile.getLevel()[(centery - num3) // num1][centerx // num2] < 3 \
                 or (tile.getLevel()[(centery - num3) // num1][centerx // num2] == 9 and (

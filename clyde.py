@@ -9,7 +9,6 @@ class Clyde(Ghost):
         self.setDirection(2)
         self.update_center()
 
-
     def draw(self, screen, player):
         return super().draw(screen, player)
     
@@ -169,7 +168,7 @@ class Clyde(Ghost):
                 self.setTarget(return_target)
         else:
             if not self.getDead():
-                if 340 < self.getCharacter_x() < 500 and 400 < self.getCharacter_y() < 500:
+                if 340 < self.getCharacter_x() < 560 and 340 < self.getCharacter_y() < 500:
                     self.setTarget([400, 100])
                 else:
                     self.setTarget([player.getCharacter_x(), player.getCharacter_y()])
