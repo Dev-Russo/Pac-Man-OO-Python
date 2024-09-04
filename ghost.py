@@ -53,8 +53,30 @@ class Ghost(Character):
     def move_ghost(self):
         pass
 
-    def update_target(self, playerx, playery):
-        self.setTarget([playerx, playery])
+    def update_target(self, player):
+        if player.getCharacter_x() < 450:
+            runaway_x = 900
+        else:
+            runaway_x = 0
+        if player.getCharacter_y() < 450:
+            runaway_y = 900
+        else:
+            runaway_y = 0
+        return_target = (380, 400)
+        if player.getPowerup():
+            if not self.getDead():
+                self.setTarget([runaway_x, runaway_y])
+            else:
+                self.setTarget(return_target)
+        else:
+            if not self.getDead():
+                if 340 < self.getCharacter_x() < 500 and 400 < self.getCharacter_y() < 500:
+                    self.setTarget([400, 100])
+                else:
+                    self.setTarget([player.getCharacter_x(), player.getCharacter_y()])
+            else:
+                self.setTarget(return_target)
+            
     
     def draw(self, screen, player):
         if (not player.getPowerup() and not self.getDead()) or (self.getEaten() and player.getPowerup() and not self.getDead()):
