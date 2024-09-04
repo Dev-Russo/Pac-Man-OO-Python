@@ -19,6 +19,9 @@ class Player(Character):
         self.scoreManager = ScoreManager() 
         self.animation = Animation()
 
+    def getPlayer_circle(self):
+        return self.__player_circle
+    
     def getScreencharacter(self):
         return self.__screencharacter
     
@@ -149,8 +152,6 @@ class Player(Character):
             turns[1] = True
         #print(centerx)
         return turns
-        
-
     #Passar ghost como parametro
     def check_colision(self, ): 
         if 0 < self.getCharacter_x() < 870:
@@ -163,6 +164,206 @@ class Player(Character):
                 self.setPowerup(True)
                 self.setPower_count(0)
                 #ghost.setEaten(False)  
-
-
     
+    def draw_circle(self, screen):
+       pygame.draw.circle(screen, 'black', (self.getCenter_x(), self.getCenter_y()), 21, 2)
+
+    def player_and_ghost_collision(self, blink, ink, pink, clyde, playerhitbox):
+        if not self.getPowerup():
+            if playerhitbox.colliderect(blink.getRect()) and not blink.getDead() or\
+                playerhitbox.colliderect(ink.getRect()) and not ink.getDead() or\
+                playerhitbox.colliderect(pink.getRect()) and not pink.getDead or\
+                playerhitbox.colliderect(clyde.getRect()) and not clyde.getDead():
+                if self.getLives() > 0:
+                    self.setLives(self.getLives() - 1)
+                    self.setStartup_counter(0)
+                    self.setPowerup(False)
+                    self.setPower_count(0)
+                    self.setCharacter_x(450)
+                    self.setCharacter_y(663)
+                    self.setDirection(0)
+                    self.setDirection_comand(0)
+                    blink.setCharacter_x(56)
+                    blink.setCharacter_y(58)
+                    blink.setDirection(0)
+                    ink.setCharacter_x(440)
+                    ink.setCharacter_y(388)
+                    ink.setDirection(2)
+                    pink.setCharacter_x(440)
+                    pink.setCharacter_y(438)
+                    pink.setDirection(2)
+                    clyde.setCharacter_x(440)
+                    clyde.setCharacter_y(438)
+                    clyde.setDirection(2)
+                    blink.setEatan(False)
+                    ink.setEatan(False)
+                    pink.setEatan(False)
+                    clyde.setEatan(False)
+                    blink.setDead(False)
+                    ink.setDead(False)
+                    pink.setDead(False)
+                    clyde.setDead(False)
+        if self.getPowerup() and playerhitbox.colliderect(blink.getRect()) and blink.getEaten() and not blink.getDead():
+            if self.getLives() > 0:
+                    self.setLives(self.getLives() - 1)
+                    self.setStartup_counter(0)
+                    self.setPowerup(False)
+                    self.setPower_count(0)
+                    self.setCharacter_x(450)
+                    self.setCharacter_y(663)
+                    self.setDirection(0)
+                    self.setDirection_comand(0)
+                    blink.setCharacter_x(56)
+                    blink.setCharacter_y(58)
+                    blink.setDirection(0)
+                    ink.setCharacter_x(440)
+                    ink.setCharacter_y(388)
+                    ink.setDirection(2)
+                    pink.setCharacter_x(440)
+                    pink.setCharacter_y(438)
+                    pink.setDirection(2)
+                    clyde.setCharacter_x(440)
+                    clyde.setCharacter_y(438)
+                    clyde.setDirection(2)
+                    blink.setEatan(False)
+                    ink.setEatan(False)
+                    pink.setEatan(False)
+                    clyde.setEatan(False)
+                    blink.setDead(False)
+                    ink.setDead(False)
+                    pink.setDead(False)
+                    clyde.setDead(False)
+        if self.getPowerup() and playerhitbox.colliderect(ink.getRect()) and ink.getEaten() and not ink.getDead():
+            if self.getLives() > 0:
+                    self.setLives(self.getLives() - 1)
+                    self.setStartup_counter(0)
+                    self.setPowerup(False)
+                    self.setPower_count(0)
+                    self.setCharacter_x(450)
+                    self.setCharacter_y(663)
+                    self.setDirection(0)
+                    self.setDirection_comand(0)
+                    blink.setCharacter_x(56)
+                    blink.setCharacter_y(58)
+                    blink.setDirection(0)
+                    ink.setCharacter_x(440)
+                    ink.setCharacter_y(388)
+                    ink.setDirection(2)
+                    pink.setCharacter_x(440)
+                    pink.setCharacter_y(438)
+                    pink.setDirection(2)
+                    clyde.setCharacter_x(440)
+                    clyde.setCharacter_y(438)
+                    clyde.setDirection(2)
+                    blink.setEatan(False)
+                    ink.setEatan(False)
+                    pink.setEatan(False)
+                    clyde.setEatan(False)
+                    blink.setDead(False)
+                    ink.setDead(False)
+                    pink.setDead(False)
+                    clyde.setDead(False)
+        if self.getPowerup() and playerhitbox.colliderect(pink.getRect()) and pink.getEaten() and not pink.getDead():
+            if self.getLives() > 0:
+                    self.setLives(self.getLives() - 1)
+                    self.setStartup_counter(0)
+                    self.setPowerup(False)
+                    self.setPower_count(0)
+                    self.setCharacter_x(450)
+                    self.setCharacter_y(663)
+                    self.setDirection(0)
+                    self.setDirection_comand(0)
+                    blink.setCharacter_x(56)
+                    blink.setCharacter_y(58)
+                    blink.setDirection(0)
+                    ink.setCharacter_x(440)
+                    ink.setCharacter_y(388)
+                    ink.setDirection(2)
+                    pink.setCharacter_x(440)
+                    pink.setCharacter_y(438)
+                    pink.setDirection(2)
+                    clyde.setCharacter_x(440)
+                    clyde.setCharacter_y(438)
+                    clyde.setDirection(2)
+                    blink.setEatan(False)
+                    ink.setEatan(False)
+                    pink.setEatan(False)
+                    clyde.setEatan(False)
+                    blink.setDead(False)
+                    ink.setDead(False)
+                    pink.setDead(False)
+                    clyde.setDead(False)
+        if self.getPowerup() and playerhitbox.colliderect(clyde.getRect()) and clyde.getEaten() and not clyde.getDead():
+            if self.getLives() > 0:
+                    self.setLives(self.getLives() - 1)
+                    self.setStartup_counter(0)
+                    self.setPowerup(False)
+                    self.setPower_count(0)
+                    self.setCharacter_x(450)
+                    self.setCharacter_y(663)
+                    self.setDirection(0)
+                    self.setDirection_comand(0)
+                    blink.setCharacter_x(56)
+                    blink.setCharacter_y(58)
+                    blink.setDirection(0)
+                    ink.setCharacter_x(440)
+                    ink.setCharacter_y(388)
+                    ink.setDirection(2)
+                    pink.setCharacter_x(440)
+                    pink.setCharacter_y(438)
+                    pink.setDirection(2)
+                    clyde.setCharacter_x(440)
+                    clyde.setCharacter_y(438)
+                    clyde.setDirection(2)
+                    blink.setEatan(False)
+                    ink.setEatan(False)
+                    pink.setEatan(False)
+                    clyde.setEatan(False)
+                    blink.setDead(False)
+                    ink.setDead(False)
+                    pink.setDead(False)
+                    clyde.setDead(False)
+        if self.getPowerup() and playerhitbox.colliderect(blink.getRect()) and not blink.getDead() and not blink.getEaten():
+            blink.setDead(True)
+            blink.setEaten(True)
+        if self.getPowerup() and playerhitbox.colliderect(ink.getRect()) and not ink.getDead() and not ink.getEaten():
+            ink.setDead(True)
+            ink.setEaten(True)
+        if self.getPowerup() and playerhitbox.colliderect(pink.getRect()) and not pink.getDead() and not pink.getEaten():
+            pink.setDead(True)
+            pink.setEaten(True)
+        if self.getPowerup() and playerhitbox.colliderect(clyde.getRect()) and not clyde.getDead() and not clyde.getEaten():
+            clyde.setDead(True)
+            clyde.setEaten(True)
+        
+            if self.getLives() > 0:
+                    self.setLives(self.getLives() - 1)
+                    self.setStartup_counter(0)
+                    self.setPowerup(False)
+                    self.setPower_count(0)
+                    self.setCharacter_x(450)
+                    self.setCharacter_y(663)
+                    self.setDirection(0)
+                    self.setDirection_comand(0)
+                    blink.setCharacter_x(56)
+                    blink.setCharacter_y(58)
+                    blink.setDirection(0)
+                    ink.setCharacter_x(440)
+                    ink.setCharacter_y(388)
+                    ink.setDirection(2)
+                    pink.setCharacter_x(440)
+                    pink.setCharacter_y(438)
+                    pink.setDirection(2)
+                    clyde.setCharacter_x(440)
+                    clyde.setCharacter_y(438)
+                    clyde.setDirection(2)
+                    blink.setEatan(False)
+                    ink.setEatan(False)
+                    pink.setEatan(False)
+                    clyde.setEatan(False)
+                    blink.setDead(False)
+                    ink.setDead(False)
+                    pink.setDead(False)
+                    clyde.setDead(False)
+                    
+        

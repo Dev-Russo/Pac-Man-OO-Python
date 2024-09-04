@@ -40,6 +40,7 @@ class Game:
             self.getTimer().tick(FPS)
             self.getScreen().fill('black')
             self.tile.draw_board()
+            player_circle = self.player.draw_circle(self.getScreen())
             self.player.draw_player(PLAYER_IMAGES)
             self.clyde.draw(self.getScreen(), self.player)
             self.pinky.draw(self.getScreen(), self.player)
@@ -72,6 +73,8 @@ class Game:
 
             self.player.scoreManager.draw_misc(self.getScreen(), self.font, self.player)
 
+            self.player.player_and_ghost_collision(self.blinky, self.inky, self.pinky, self.clyde, player_circle)
+            
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.setRun(False)
