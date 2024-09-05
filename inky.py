@@ -167,10 +167,13 @@ class Inky(Ghost):
             runaway_x = 0
         return_target = (380, 400)
         if player.getPowerup():
-            if not self.getDead():
+            if not self.getDead() and not self.getEaten():
                 self.setTarget([runaway_x, player.getCharacter_y()])
-            else:
-                self.setTarget(return_target)
+            elif not self.getDead() and self.getEaten():
+                if 340 < self.getCharacter_x() < 560 and 340 < self.getCharacter_y() < 500:
+                    self.setTarget([400, 100])
+                else:
+                    self.setTarget([player.getCharacter_x(), player.getCharacter_y()])
         else:
             if not self.getDead():
                 if 340 < self.getCharacter_x() < 560 and 340 < self.getCharacter_y() < 500:

@@ -41,6 +41,12 @@ class Game:
             self.getTimer().tick(FPS)
             self.getScreen().fill('black')
             self.tile.draw_board()
+            
+            self.blinky.speed_varation(self.player)
+            self.inky.speed_varation(self.player)
+            self.pinky.speed_varation(self.player)
+            self.clyde.speed_varation(self.player)
+            
             player_circle = pygame.draw.circle(self.getScreen(), 'black', (self.player.getCenter_x(), self.player.getCenter_y()), 18, 2)
             self.player.draw_player(PLAYER_IMAGES)
             
@@ -82,6 +88,12 @@ class Game:
                     self.setRun(False)
                 self.player.check_keyboard(event)
             self.player.change_direction()
+            
+            self.blinky.no_longer_dead()
+            self.inky.no_longer_dead()
+            self.pinky.no_longer_dead()
+            self.clyde.no_longer_dead()
+            
         
             pygame.display.flip()
         
