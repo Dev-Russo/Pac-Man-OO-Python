@@ -173,6 +173,31 @@ class Player(Character):
        pygame.draw.circle(screen, 'black', (self.getCenter_x(), self.getCenter_y()), 21, 2)
        
 
+    def count_eated_ghosts(self, blink, ink, pink, clyde):
+    # Inicializa o contador de fantasmas comidos
+        ghosts_eaten_count = 0
+        
+        # Verifica se o power-up está ativo
+        if self.getPowerup():
+            # Verifica se cada fantasma foi comido e atualiza o contador
+            if blink.getEaten():  # Se o fantasma blink foi comido
+                ghosts_eaten_count += 1
+            
+            if ink.getEaten():  # Se o fantasma ink foi comido
+                ghosts_eaten_count += 1  # Reseta o estado "comido" do ink
+            
+            if pink.getEaten():  # Se o fantasma pink foi comido
+                ghosts_eaten_count += 1 
+            
+            if clyde.getEaten():  # Se o fantasma clyde foi comido
+                ghosts_eaten_count += 1  
+
+        # Se o power-up acabou, o contador de fantasmas comidos permanece como zero
+        else:
+            ghosts_eaten_count = 0
+
+        return ghosts_eaten_count
+
     def player_and_ghost_collision(self, blink, ink, pink, clyde, playerhitbox):
         if not self.__collision_detected:
             if not self.getPowerup():
@@ -337,19 +362,28 @@ class Player(Character):
             if self.getPowerup() and playerhitbox.colliderect(blink.getRect()) and not blink.getDead() and not blink.getEaten():
                 blink.setDead(True)
                 blink.setEaten(True)
-                self.scoreManager.setScore((2 ** blink.count()) * 100)
+                pontuacao = ((2 ** self.count_eated_ghosts(blink, ink, pink, clyde)) * 100)
+                self.scoreManager.setScore(self.scoreManager.getScore() + pontuacao)
+                print(pontuacao)
             if self.getPowerup() and playerhitbox.colliderect(ink.getRect()) and not ink.getDead() and not ink.getEaten():
                 ink.setDead(True)
                 ink.setEaten(True)
-                self.scoreManager.setScore((2 ** ink.count()) * 100)
+                pontuacao = ((2 ** self.count_eated_ghosts(blink, ink, pink, clyde)) * 100)
+                self.scoreManager.setScore(self.scoreManager.getScore() + pontuacao)
+                print(pontuacao)
             if self.getPowerup() and playerhitbox.colliderect(pink.getRect()) and not pink.getDead() and not pink.getEaten():
                 pink.setDead(True)
                 pink.setEaten(True)
-                self.scoreManager.setScore((2 ** pink.count()) * 100)
+                pontuacao = ((2 ** self.count_eated_ghosts(blink, ink, pink, clyde)) * 100)
+                self.scoreManager.setScore(self.scoreManager.getScore() + pontuacao)
+                print(pontuacao)
             if self.getPowerup() and playerhitbox.colliderect(clyde.getRect()) and not clyde.getDead() and not clyde.getEaten():
                 clyde.setDead(True)
                 clyde.setEaten(True)
-                self.scoreManager.setScore((2 ** clyde.count()) * 100)
+                pontuacao = ((2 ** self.count_eated_ghosts(blink, ink, pink, clyde)) * 100)
+                self.scoreManager.setScore(self.scoreManager.getScore() + pontuacao)
+                print(pontuacao)
         else:
             self.reset_collision()
+        
         

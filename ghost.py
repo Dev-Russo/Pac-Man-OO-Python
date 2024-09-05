@@ -13,6 +13,7 @@ class Ghost(Character):
         self.setCenter_y(self.getCharacter_y() + 22)
         self.__inthebox = True
         self.__rect = pygame.rect.Rect((self.getCenter_x() - 18, self.getCenter_y() - 18), (36, 36))
+        self.count = 0
     
     def getRect(self):
         return self.__rect
@@ -51,7 +52,146 @@ class Ghost(Character):
         self.__inthebox = value
         
     def move_ghost(self):
-        pass
+        if self.getDirection() == 0:  # Direita
+            if self.getTarget()[0] > self.getCharacter_x() and self.getTurns_allowed()[0]:
+                self.setCharacter_x(self.getCharacter_x() + self.getCharacter_speed())
+            elif not self.getTurns_allowed()[0]:
+                if self.getTarget()[1] > self.getCharacter_y() and self.getTurns_allowed()[3]:
+                    self.setDirection(3)
+                    self.setCharacter_y(self.getCharacter_y() + self.getCharacter_speed())
+                elif self.getTarget()[1] < self.getCharacter_y() and self.getTurns_allowed()[2]:
+                    self.setDirection(2)
+                    self.setCharacter_y(self.getCharacter_y() - self.getCharacter_speed())
+                elif self.getTarget()[0] < self.getCharacter_x() and self.getTurns_allowed()[1]:
+                    self.setDirection(1)
+                    self.setCharacter_x(self.getCharacter_x() - self.getCharacter_speed())
+                elif self.getTurns_allowed()[3]:
+                    self.setDirection(3)
+                    self.setCharacter_y(self.getCharacter_y() + self.getCharacter_speed())
+                elif self.getTurns_allowed()[2]:
+                    self.setDirection(2)
+                    self.setCharacter_y(self.getCharacter_y() - self.getCharacter_speed())
+                elif self.getTurns_allowed()[1]:
+                    self.setDirection(1)
+                    self.setCharacter_x(self.getCharacter_x() - self.getCharacter_speed())
+            elif self.getTurns_allowed()[0]:
+                if self.getTarget()[1] > self.getCharacter_y() and self.getTurns_allowed()[3]:
+                    self.setDirection(3)
+                    self.setCharacter_y(self.getCharacter_y() + self.getCharacter_speed())
+                if self.getTarget()[1] < self.getCharacter_y() and self.getTurns_allowed()[2]:
+                    self.setDirection(2)
+                    self.setCharacter_y(self.getCharacter_y() - self.getCharacter_speed())
+                else:
+                    self.setCharacter_x(self.getCharacter_x() + self.getCharacter_speed())
+        elif self.getDirection() == 1:  # Esquerda
+            if self.getTarget()[1] > self.getCharacter_y() and self.getTurns_allowed()[3]:
+                self.setDirection(3)
+                self.setCharacter_y(self.getCharacter_y() + self.getCharacter_speed())
+            elif self.getTarget()[0] < self.getCharacter_x() and self.getTurns_allowed()[1]:
+                self.setCharacter_x(self.getCharacter_x() - self.getCharacter_speed())
+            elif not self.getTurns_allowed()[1]:
+                if self.getTarget()[1] > self.getCharacter_y() and self.getTurns_allowed()[3]:
+                    self.setDirection(3)
+                    self.setCharacter_y(self.getCharacter_y() + self.getCharacter_speed())
+                elif self.getTarget()[1] < self.getCharacter_y() and self.getTurns_allowed()[2]:
+                    self.setDirection(2)
+                    self.setCharacter_y(self.getCharacter_y() - self.getCharacter_speed())
+                elif self.getTarget()[0] > self.getCharacter_x() and self.getTurns_allowed()[0]:
+                    self.setDirection(0)
+                    self.setCharacter_x(self.getCharacter_x() + self.getCharacter_speed())
+                elif self.getTurns_allowed()[3]:
+                    self.setDirection(3)
+                    self.setCharacter_y(self.getCharacter_y() + self.getCharacter_speed())
+                elif self.getTurns_allowed()[2]:
+                    self.setDirection(2)
+                    self.setCharacter_y(self.getCharacter_y() - self.getCharacter_speed())
+                elif self.getTurns_allowed()[0]:
+                    self.setDirection(0)
+                    self.setCharacter_x(self.getCharacter_x() + self.getCharacter_speed())
+            elif self.getTurns_allowed()[1]:
+                if self.getTarget()[1] > self.getCharacter_y() and self.getTurns_allowed()[3]:
+                    self.setDirection(3)
+                    self.setCharacter_y(self.getCharacter_y() + self.getCharacter_speed())
+                if self.getTarget()[1] < self.getCharacter_y() and self.getTurns_allowed()[2]:
+                    self.setDirection(2)
+                    self.setCharacter_y(self.getCharacter_y() - self.getCharacter_speed())
+                else:
+                    self.setCharacter_x(self.getCharacter_x() - self.getCharacter_speed())
+        elif self.getDirection() == 2:  # Cima
+            if self.getTarget()[0] < self.getCharacter_x() and self.getTurns_allowed()[1]:
+                self.setDirection(1)
+                self.setCharacter_x(self.getCharacter_x() - self.getCharacter_speed())
+            elif self.getTarget()[1] < self.getCharacter_y() and self.getTurns_allowed()[2]:
+                self.setCharacter_y(self.getCharacter_y() - self.getCharacter_speed())
+            elif not self.getTurns_allowed()[2]:
+                if self.getTarget()[0] > self.getCharacter_x() and self.getTurns_allowed()[0]:
+                    self.setDirection(0)
+                    self.setCharacter_x(self.getCharacter_x() + self.getCharacter_speed())
+                elif self.getTarget()[0] < self.getCharacter_x() and self.getTurns_allowed()[1]:
+                    self.setDirection(1)
+                    self.setCharacter_x(self.getCharacter_x() - self.getCharacter_speed())
+                elif self.getTarget()[1] > self.getCharacter_y() and self.getTurns_allowed()[3]:
+                    self.setDirection(3)
+                    self.setCharacter_y(self.getCharacter_y() + self.getCharacter_speed())
+                elif self.getTurns_allowed()[1]:
+                    self.setDirection(1)
+                    self.setCharacter_x(self.getCharacter_x() - self.getCharacter_speed())
+                elif self.getTurns_allowed()[3]:
+                    self.setDirection(3)
+                    self.setCharacter_y(self.getCharacter_y() + self.getCharacter_speed())
+                elif self.getTurns_allowed()[0]:
+                    self.setDirection(0)
+                    self.setCharacter_x(self.getCharacter_x() + self.getCharacter_speed())
+            elif self.getTurns_allowed()[2]:
+                if self.getTarget()[0] > self.getCharacter_x() and self.getTurns_allowed()[0]:
+                    self.setDirection(0)
+                    self.setCharacter_x(self.getCharacter_x() + self.getCharacter_speed())
+                elif self.getTarget()[0] < self.getCharacter_x() and self.getTurns_allowed()[1]:
+                    self.setDirection(1)
+                    self.setCharacter_x(self.getCharacter_x() - self.getCharacter_speed())
+                else:
+                    self.setCharacter_y(self.getCharacter_y() - self.getCharacter_speed())
+        elif self.getDirection() == 3:  # Baixo
+            if self.getTarget()[1] > self.getCharacter_y() and self.getTurns_allowed()[3]:
+                self.setCharacter_y(self.getCharacter_y() + self.getCharacter_speed())
+            elif not self.getTurns_allowed()[3]:
+                if self.getTarget()[0] > self.getCharacter_x() and self.getTurns_allowed()[0]:
+                    self.setDirection(0)
+                    self.setCharacter_x(self.getCharacter_x() + self.getCharacter_speed())
+                elif self.getTarget()[0] < self.getCharacter_x() and self.getTurns_allowed()[1]:
+                    self.setDirection(1)
+                    self.setCharacter_x(self.getCharacter_x() - self.getCharacter_speed())
+                elif self.getTarget()[1] < self.getCharacter_y() and self.getTurns_allowed()[2]:
+                    self.setDirection(2)
+                    self.setCharacter_y(self.getCharacter_y() - self.getCharacter_speed())
+                elif self.getTurns_allowed()[2]:
+                    self.setDirection(2)
+                    self.setCharacter_y(self.getCharacter_y() - self.getCharacter_speed())
+                elif self.getTurns_allowed()[1]:
+                    self.setDirection(1)
+                    self.setCharacter_x(self.getCharacter_x() - self.getCharacter_speed())
+                elif self.getTurns_allowed()[0]:
+                    self.setDirection(0)
+                    self.setCharacter_x(self.getCharacter_x() + self.getCharacter_speed())
+            elif self.getTurns_allowed()[3]:
+                if self.getTarget()[0] > self.getCharacter_x() and self.getTurns_allowed()[0]:
+                    self.setDirection(0)
+                    self.setCharacter_x(self.getCharacter_x() + self.getCharacter_speed())
+                elif self.getTarget()[0] < self.getCharacter_x() and self.getTurns_allowed()[1]:
+                    self.setDirection(1)
+                    self.setCharacter_x(self.getCharacter_x() - self.getCharacter_speed())
+                else:
+                    self.setCharacter_y(self.getCharacter_y() + self.getCharacter_speed())
+        
+        # Verificar limites do mapa
+        if self.getCharacter_x() < -30:
+            self.setCharacter_x(900)
+        elif self.getCharacter_x() > 900:
+            self.setCharacter_x(-30)
+            
+        self.update_center()
+
+        return self.getCharacter_x(), self.getCharacter_y(), self.getDirection()
 
     def update_target(self, player):
         if player.getCharacter_x() < 450:
@@ -198,9 +338,8 @@ class Ghost(Character):
         if self.getDead():
             self.setCharacter_speed(4)
             
-    def count(self):
-        count = 0
+    def sum(self):
         if self.getEaten():
-            count += 1
-        return count
+            self.count += 1
+        return self.count
         

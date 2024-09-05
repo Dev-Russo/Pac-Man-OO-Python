@@ -76,7 +76,10 @@ class Game:
                 self.clyde.move_ghost()
                 self.pinky.move_ghost()
                 self.inky.move_ghost()
-                self.blinky.move_ghost()
+                if not self.blinky.getDead() and not self.blinky.getInthebox():
+                    self.blinky.move_ghost(False)
+                else:
+                    self.blinky.move_ghost(True)
             
             self.player.powerup_up_and_start_game()
             self.player.player_and_ghost_collision(self.blinky, self.inky, self.pinky, self.clyde, player_circle)
