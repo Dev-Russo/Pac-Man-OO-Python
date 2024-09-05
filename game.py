@@ -74,8 +74,17 @@ class Game:
             if self.player.getMoving():
                 self.player.move(self.player.getCharacter_x(), self.player.getCharacter_y())
                 self.clyde.move_ghost()
-                self.pinky.move_ghost()
-                self.inky.move_ghost()
+                
+                if not self.pinky.getDead() and not self.pinky.getInthebox():
+                    self.pinky.move_ghost(False)
+                else:
+                    self.pinky.move_ghost(True)
+                
+                if not self.inky.getDead() and not self.inky.getInthebox():
+                    self.inky.move_ghost(False)
+                else:
+                    self.inky.move_ghost(True)
+                    
                 if not self.blinky.getDead() and not self.blinky.getInthebox():
                     self.blinky.move_ghost(False)
                 else:

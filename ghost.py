@@ -338,8 +338,5 @@ class Ghost(Character):
         if self.getDead():
             self.setCharacter_speed(4)
             
-    def sum(self):
-        if self.getEaten():
-            self.count += 1
-        return self.count
+
         

@@ -126,8 +126,6 @@ class Blinky(Ghost):
 
             # Atualiza a posição central do personagem
             self.update_center()
-            print(f'Morto: {self.getDead()}')
-            print(f'Box: {self.getDead()}')
             return self.getCharacter_x(), self.getCharacter_y(), self.getDirection()
 
     
