@@ -9,6 +9,7 @@ from inky import *
 from clyde import *
 
 pygame.init()
+pygame.mixer.init()
 
 class Game:
     def __init__(self) -> None:

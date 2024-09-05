@@ -21,3 +21,9 @@ inky_img = pygame.transform.scale(pygame.image.load(f'assets/ghost_images/blue.p
 clyde_img = pygame.transform.scale(pygame.image.load(f'assets/ghost_images/orange.png'), (45, 45))
 spooked_img = pygame.transform.scale(pygame.image.load(f'assets/ghost_images/powerup.png'), (45, 45))
 dead_img = pygame.transform.scale(pygame.image.load(f'assets/ghost_images/dead.png'), (45, 45))
+
+pygame.mixer.init()
+#Sounds
+credit = pygame.mixer.Sound('assets/pacmansounds/credit.wav')
+eat_ghost = pygame.mixer.Sound('assets/pacmansounds/eat_ghost.wav')
+start = pygame.mixer.Sound('assets/pacmansounds/start.wav')
