@@ -5,6 +5,7 @@ from character import *
 from tile import *
 from scoremanager import *
 from ghost import *
+from gamemap import *
 
 class Player(Character):
     def __init__(self, screencharacter) -> None:
@@ -14,11 +15,13 @@ class Player(Character):
         self.setCenter_y(self.getCharacter_y() + 24)
         self.__powerup = False
         self.__power_count = 0
-        self.__lives = 3
+        self.__lives = 0
         self.tile = Tile(self.__screencharacter)
         self.scoreManager = ScoreManager() 
         self.animation = Animation()
         self.__collision_detected = False
+        self.player_game_over = False
+        self.game_won = False
 
     def reset_collision(self):
         self.__collision_detected = False
@@ -50,18 +53,21 @@ class Player(Character):
     def powerup_up_and_start_game(self):
         if self.getPowerup() and self.getPower_count() < 600:
             self.setPower_count(self.getPower_count() + 1)
+            siren.play()
         elif self.getPowerup() and self.getPower_count() >= 600:
             self.setPowerup(False)
             self.setPower_count(0)
             #ghost.setEaten(False)    
-        if self.getStartup_counter() < 240:
+        if self.getStartup_counter() < 180 and not self.player_game_over and not self.game_won:
             self.setMoving(False)
             self.setStartup_counter(self.getStartup_counter() + 1)
-            start.play()
         else:
             self.setMoving(True)           
     
-    def check_keyboard(self, event):
+    def update_game_ovver(self):
+        self.player_game_over = False
+    
+    def check_keyboard(self, event, blink, ink, pink, clyde):
     # Verifica se o evento é um evento de teclado antes de acessar 'key'
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
@@ -72,6 +78,42 @@ class Player(Character):
                 self.setDirection_comand(2)  # Baixo
             elif event.key == pygame.K_UP:
                 self.setDirection_comand(3)  # Cima
+            if event.key == pygame.K_SPACE and (self.game_won or self.player_game_over):
+                    
+                    print(self.player_game_over)
+                    self.game_won = False
+                    self.setStartup_counter(0)
+                    self.setPowerup(False)
+                    self.setPower_count(0)
+                    self.setCharacter_x(450)
+                    self.setCharacter_y(663)
+                    self.setDirection(0)
+                    self.setDirection_comand(0)
+                    blink.setCharacter_x(56)
+                    blink.setCharacter_y(58)
+                    blink.setDirection(0)
+                    ink.setCharacter_x(440)
+                    ink.setCharacter_y(388)
+                    ink.setDirection(2)
+                    pink.setCharacter_x(440)
+                    pink.setCharacter_y(438)
+                    pink.setDirection(2)
+                    clyde.setCharacter_x(440)
+                    clyde.setCharacter_y(438)
+                    clyde.setDirection(2)
+                    blink.setEaten(False)
+                    ink.setEaten(False)
+                    pink.setEaten(False)
+                    clyde.setEaten(False)
+                    blink.setDead(False)
+                    ink.setDead(False)
+                    pink.setDead(False)
+                    clyde.setDead(False)
+                    self.scoreManager.setScore(0)
+                    self.setLives(3)
+                    self.tile.setLevel(gamemap)
+                    self.update_game_ovver()
+                    self.player_game_over = False
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT and self.getDirection_comand() == 0:
                 self.setDirection_comand(self.getDirection())
@@ -171,7 +213,6 @@ class Player(Character):
                 self.setPower_count(0)
                 #ghost.setEaten(False)  
        
-
     def count_eated_ghosts(self, blink, ink, pink, clyde):
     # Inicializa o contador de fantasmas comidos
         ghosts_eaten_count = 0
@@ -234,6 +275,10 @@ class Player(Character):
                         pink.setDead(False)
                         clyde.setDead(False)
                         self.__collision_detected = True
+                    else:
+                        self.player_game_over = True
+                        self.setMoving(False)
+                        self.setStartup_counter(0)
             if self.getPowerup() and playerhitbox.colliderect(blink.getRect()) and blink.getEaten() and not blink.getDead():
                 if self.getLives() > 0:
                         self.setStartup_counter(0)
@@ -265,6 +310,10 @@ class Player(Character):
                         pink.setDead(False)
                         clyde.setDead(False)
                         self.__collision_detected = True
+                else:
+                        self.player_game_over = True
+                        self.setMoving(False)
+                        self.setStartup_counter(0)
             if self.getPowerup() and playerhitbox.colliderect(ink.getRect()) and ink.getEaten() and not ink.getDead():
                 if self.getLives() > 0:
                         self.setStartup_counter(0)
@@ -296,6 +345,10 @@ class Player(Character):
                         pink.setDead(False)
                         clyde.setDead(False)
                         self.__collision_detected = True
+                else:
+                        self.player_game_over = True
+                        self.setMoving(False)
+                        self.setStartup_counter(0)
             if self.getPowerup() and playerhitbox.colliderect(pink.getRect()) and pink.getEaten() and not pink.getDead():
                 if self.getLives() > 0:
                         self.setStartup_counter(0)
@@ -327,6 +380,10 @@ class Player(Character):
                         pink.setDead(False)
                         clyde.setDead(False)
                         self.__collision_detected = True
+                else:
+                        self.player_game_over = True
+                        self.setMoving(False)
+                        self.setStartup_counter(0)
             if self.getPowerup() and playerhitbox.colliderect(clyde.getRect()) and clyde.getEaten() and not clyde.getDead():
                 if self.getLives() > 0:
                         self.setStartup_counter(0)
@@ -358,6 +415,10 @@ class Player(Character):
                         pink.setDead(False)
                         clyde.setDead(False)
                         self.__collision_detected = True
+                else:
+                        self.player_game_over = True
+                        self.setMoving(False)
+                        self.setStartup_counter(0)
             if self.getPowerup() and playerhitbox.colliderect(blink.getRect()) and not blink.getDead() and not blink.getEaten():
                 blink.setDead(True)
                 blink.setEaten(True)
@@ -388,5 +449,4 @@ class Player(Character):
                 eat_ghost.play()
         else:
             self.reset_collision()
-        
         

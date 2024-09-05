@@ -99,7 +99,7 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.setRun(False)
-                self.player.check_keyboard(event)
+                self.player.check_keyboard(event, self.blinky, self.inky, self.pinky, self.clyde)
             self.player.change_direction()
             
             self.blinky.no_longer_dead(self.player)

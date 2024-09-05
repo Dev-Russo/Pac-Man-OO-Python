@@ -24,6 +24,7 @@ dead_img = pygame.transform.scale(pygame.image.load(f'assets/ghost_images/dead.p
 
 pygame.mixer.init()
 #Sounds
-credit = pygame.mixer.Sound('assets/pacmansounds/credit.wav')
+credit = pygame.mixer.Sound('assets/pacmansounds/eat_dot_0.wav')
 eat_ghost = pygame.mixer.Sound('assets/pacmansounds/eat_ghost.wav')
 start = pygame.mixer.Sound('assets/pacmansounds/start.wav')
+siren = pygame.mixer.Sound('assets/pacmansounds/siren1.wav')

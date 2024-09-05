@@ -22,6 +22,9 @@ class Tile:
     def getLevel(self):
         return self.__level
     
+    def setLevel(self, val):
+        self.__level = val
+    
     def getScreentile(self):
         return self.__screentile
     

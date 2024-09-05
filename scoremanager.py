@@ -18,3 +18,14 @@ class ScoreManager:
             pygame.draw.circle(screen, 'blue', (180, 930), 15)
         for i in range(player.getLives()):
             screen.blit(pygame.transform.scale(PLAYER_IMAGES[0], (30, 30)), (650 + i * 40, 915))
+        if player.player_game_over:
+            pygame.draw.rect(screen, 'white', [50, 200, 800, 300],0, 10)
+            pygame.draw.rect(screen, 'darkgray', [70, 220, 760, 260],0, 10)
+            gameover_text = font.render('Game over! Aperte espaço para continuar', True, 'red')
+            screen.blit(gameover_text, (100, 300))
+        if player.game_won:
+            pygame.draw.rect(screen, 'white', [50, 200, 800, 300],0, 10)
+            pygame.draw.rect(screen, 'darkgray', [70, 220, 760, 260],0, 10)
+            gameover_text = font.render('Victory! Aperte espaço para continuar', True, 'green')
+            screen.blit(gameover_text, (100, 300))
+        player.update_game_ovver()
