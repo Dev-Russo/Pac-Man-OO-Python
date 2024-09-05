@@ -180,5 +180,3 @@ class Ghost(Character):
             self.setInthebox(False)
 
         self.setTurns_allowed(turns)
-        print(centery)
-        print(centerx)

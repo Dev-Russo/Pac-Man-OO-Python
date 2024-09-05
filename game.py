@@ -23,6 +23,7 @@ class Game:
         self.blinky = Blinky()
         self.pinky = Pinky()
 
+        
     def getScreen(self):
         return self.__screen
     
@@ -40,13 +41,14 @@ class Game:
             self.getTimer().tick(FPS)
             self.getScreen().fill('black')
             self.tile.draw_board()
-            player_circle = self.player.draw_circle(self.getScreen())
+            player_circle = pygame.draw.circle(self.getScreen(), 'black', (self.player.getCenter_x(), self.player.getCenter_y()), 20, 2)
             self.player.draw_player(PLAYER_IMAGES)
             self.clyde.draw(self.getScreen(), self.player)
             self.pinky.draw(self.getScreen(), self.player)
             self.inky.draw(self.getScreen(), self.player)
             self.blinky.draw(self.getScreen(), self.player)
             self.player.setTurns_allowed(self.player.check_position(self.player.getCenter_x(), self.player.getCenter_y()))
+            self.player.player_and_ghost_collision(self.blinky, self.inky, self.pinky, self.clyde, player_circle)
             self.player.powerup_up_and_start_game()
 
             # Atualizando centerx e centery do fantasma
@@ -72,8 +74,6 @@ class Game:
             self.player.check_colision()
 
             self.player.scoreManager.draw_misc(self.getScreen(), self.font, self.player)
-
-            self.player.player_and_ghost_collision(self.blinky, self.inky, self.pinky, self.clyde, player_circle)
             
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
