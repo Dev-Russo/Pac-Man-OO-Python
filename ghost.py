@@ -52,6 +52,8 @@ class Ghost(Character):
         self.__inthebox = value
         
     def move_ghost(self):
+        if self.getTarget() is None:
+            self.setTarget([self.getCharacter_x(), self.getCharacter_y()])  # Alvo padrão como sua posição atual
         if self.getDirection() == 0:  # Direita
             if self.getTarget()[0] > self.getCharacter_x() and self.getTurns_allowed()[0]:
                 self.setCharacter_x(self.getCharacter_x() + self.getCharacter_speed())
