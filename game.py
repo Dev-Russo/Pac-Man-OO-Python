@@ -47,7 +47,7 @@ class Game:
             self.pinky.speed_varation(self.player)
             self.clyde.speed_varation(self.player)
             
-            player_circle = pygame.draw.circle(self.getScreen(), 'black', (self.player.getCenter_x(), self.player.getCenter_y()), 18, 2)
+            player_circle = pygame.draw.circle(self.getScreen(), 'black', (self.player.getCenter_x(), self.player.getCenter_y()), 16, 2)
             self.player.draw_player(PLAYER_IMAGES)
             
             self.clyde.draw(self.getScreen(), self.player)
@@ -89,10 +89,10 @@ class Game:
                 self.player.check_keyboard(event)
             self.player.change_direction()
             
-            self.blinky.no_longer_dead()
-            self.inky.no_longer_dead()
-            self.pinky.no_longer_dead()
-            self.clyde.no_longer_dead()
+            self.blinky.no_longer_dead(self.player)
+            self.inky.no_longer_dead(self.player)
+            self.pinky.no_longer_dead(self.player)
+            self.clyde.no_longer_dead(self.player)
             
         
             pygame.display.flip()

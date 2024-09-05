@@ -177,6 +177,8 @@ class Blinky(Ghost):
                     self.setTarget([400, 100])
                 else:
                     self.setTarget([player.getCharacter_x(), player.getCharacter_y()])
+            else:
+                self.setTarget(return_target)
         else:
             if not self.getDead():
                 if 340 < self.getCharacter_x() < 560 and 340 < self.getCharacter_y() < 500:

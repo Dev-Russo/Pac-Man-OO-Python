@@ -184,9 +184,11 @@ class Ghost(Character):
 
         self.setTurns_allowed(turns)
         
-    def no_longer_dead(self):
+    def no_longer_dead(self, player):
         if self.getInthebox() and self.getDead():
             self.setDead(False)
+        if not player.getPowerup():
+            self.setEaten(False)
             
     def speed_varation(self, player):
         if player.getPowerup():
@@ -195,4 +197,10 @@ class Ghost(Character):
             self.setCharacter_speed(2) 
         if self.getDead():
             self.setCharacter_speed(4)
+            
+    def count(self):
+        count = 0
+        if self.getEaten():
+            count += 1
+        return count
         

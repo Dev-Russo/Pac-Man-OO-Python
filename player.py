@@ -337,15 +337,19 @@ class Player(Character):
             if self.getPowerup() and playerhitbox.colliderect(blink.getRect()) and not blink.getDead() and not blink.getEaten():
                 blink.setDead(True)
                 blink.setEaten(True)
+                self.scoreManager.setScore((2 ** blink.count()) * 100)
             if self.getPowerup() and playerhitbox.colliderect(ink.getRect()) and not ink.getDead() and not ink.getEaten():
                 ink.setDead(True)
                 ink.setEaten(True)
+                self.scoreManager.setScore((2 ** ink.count()) * 100)
             if self.getPowerup() and playerhitbox.colliderect(pink.getRect()) and not pink.getDead() and not pink.getEaten():
                 pink.setDead(True)
                 pink.setEaten(True)
+                self.scoreManager.setScore((2 ** pink.count()) * 100)
             if self.getPowerup() and playerhitbox.colliderect(clyde.getRect()) and not clyde.getDead() and not clyde.getEaten():
                 clyde.setDead(True)
                 clyde.setEaten(True)
+                self.scoreManager.setScore((2 ** clyde.count()) * 100)
         else:
             self.reset_collision()
         
