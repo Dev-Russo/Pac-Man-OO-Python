@@ -42,7 +42,7 @@ class Tile:
         self.getNum1()
         self.getNum2()
         self.animation.up_counter()
-        print(self.getLevel())
+
         for i in range(len(self.getLevel())):
             for j in range(len(self.getLevel()[i])):
                 tile_value = self.getLevel()[i][j]

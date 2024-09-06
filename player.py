@@ -16,14 +16,37 @@ class Player(Character):
         self.setCenter_y(self.getCharacter_y() + 24)
         self.__powerup = False
         self.__power_count = 0
-        self.__lives = 3
+        self.__lives = 0
         self.tile = Tile(self.__screencharacter)
         self.scoreManager = ScoreManager() 
         self.animation = Animation()
         self.__collision_detected = False
         self.player_game_over = False
         self.game_won = False
+        self.show_ranking = 0
+        self.showing_ranking = False
+        self.tres_maiores = []
 
+    
+    def scoring(self, score):
+        file = open('score.txt', 'a')
+        file.write(f'\n{str(score)}')
+        file.close()
+        with open('score.txt', 'r') as fo:
+            linhas = fo.readlines()
+        pontuacoes = []
+        for linha in linhas:
+            try:
+                int_from_str = int(linha.strip())
+                pontuacoes.append(int_from_str)
+            except ValueError:
+                continue
+        fo.close()
+        self.tres_maiores = sorted(pontuacoes, reverse=True)[:3]
+        print(pontuacoes)
+        print(self.tres_maiores)
+        return self.tres_maiores
+    
     def reset_collision(self):
         self.__collision_detected = False
 
@@ -37,6 +60,7 @@ class Player(Character):
         return self.__lives
     
     def setLives(self, value):
+        print(f"Setting lives to: {value}")
         self.__lives = value
         
     def getPowerup(self):
@@ -165,7 +189,6 @@ class Player(Character):
         #print(centerx)
         return turns
 
-
     def check_colision(self, tile):
         tile_x = self.getCenter_x() // tile.getNum2()
         tile_y = self.getCenter_y() // tile.getNum1()
@@ -184,8 +207,7 @@ class Player(Character):
                 self.scoreManager.setScore(self.scoreManager.getScore() + 50)
                 self.setPowerup(True)
                 self.setPower_count(0)
-
-       
+    
     def count_eated_ghosts(self, blink, ink, pink, clyde):
     # Inicializa o contador de fantasmas comidos
         ghosts_eaten_count = 0
@@ -252,6 +274,7 @@ class Player(Character):
                         self.player_game_over = True
                         self.setMoving(False)
                         self.setStartup_counter(0)
+                        
             if self.getPowerup() and playerhitbox.colliderect(blink.getRect()) and blink.getEaten() and not blink.getDead():
                     if self.getLives() > 0:
                         self.setStartup_counter(0)
@@ -397,30 +420,28 @@ class Player(Character):
                 blink.setEaten(True)
                 pontuacao = ((2 ** self.count_eated_ghosts(blink, ink, pink, clyde)) * 100)
                 self.scoreManager.setScore(self.scoreManager.getScore() + pontuacao)
-                print(pontuacao)
+                
                 eat_ghost.play()
             if self.getPowerup() and playerhitbox.colliderect(ink.getRect()) and not ink.getDead() and not ink.getEaten():
                 ink.setDead(True)
                 ink.setEaten(True)
                 pontuacao = ((2 ** self.count_eated_ghosts(blink, ink, pink, clyde)) * 100)
                 self.scoreManager.setScore(self.scoreManager.getScore() + pontuacao)
-                print(pontuacao)
+               
                 eat_ghost.play()
             if self.getPowerup() and playerhitbox.colliderect(pink.getRect()) and not pink.getDead() and not pink.getEaten():
                 pink.setDead(True)
                 pink.setEaten(True)
                 pontuacao = ((2 ** self.count_eated_ghosts(blink, ink, pink, clyde)) * 100)
                 self.scoreManager.setScore(self.scoreManager.getScore() + pontuacao)
-                print(pontuacao)
+                
                 eat_ghost.play()
             if self.getPowerup() and playerhitbox.colliderect(clyde.getRect()) and not clyde.getDead() and not clyde.getEaten():
                 clyde.setDead(True)
                 clyde.setEaten(True)
                 pontuacao = ((2 ** self.count_eated_ghosts(blink, ink, pink, clyde)) * 100)
                 self.scoreManager.setScore(self.scoreManager.getScore() + pontuacao)
-                print(pontuacao)
+                
                 eat_ghost.play()
         else:
             self.reset_collision()
-        #self.update_game_ovver()
-        
