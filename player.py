@@ -29,24 +29,27 @@ class Player(Character):
 
     
     def scoring(self, score):
-        file = open('score.txt', 'a')
-        file.write(f'\n{str(score)}')
-        file.close()
-        with open('score.txt', 'r') as fo:
-            linhas = fo.readlines()
-        pontuacoes = []
-        for linha in linhas:
-            try:
-                int_from_str = int(linha.strip())
-                pontuacoes.append(int_from_str)
-            except ValueError:
-                continue
-        fo.close()
-        self.tres_maiores = sorted(pontuacoes, reverse=True)[:3]
-        print(pontuacoes)
-        print(self.tres_maiores)
-        return self.tres_maiores
-    
+        if score >= 0:    
+            file = open('score.txt', 'a')
+            file.write(f'\n{str(score)}')
+            file.close()
+            with open('score.txt', 'r') as fo:
+                linhas = fo.readlines()
+            pontuacoes = []
+            for linha in linhas:
+                try:
+                    int_from_str = int(linha.strip())
+                    pontuacoes.append(int_from_str)
+                except ValueError:
+                    continue
+            fo.close()
+            self.tres_maiores = sorted(pontuacoes, reverse=True)[:3]
+            print(pontuacoes)
+            print(self.tres_maiores)
+            return self.tres_maiores
+        else:
+            pass
+        
     def reset_collision(self):
         self.__collision_detected = False
 
