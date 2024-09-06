@@ -28,4 +28,3 @@ class ScoreManager:
             pygame.draw.rect(screen, 'darkgray', [70, 220, 760, 260],0, 10)
             gameover_text = font.render('Victory! Aperte espaço para continuar', True, 'green')
             screen.blit(gameover_text, (100, 300))
-        player.update_game_ovver()

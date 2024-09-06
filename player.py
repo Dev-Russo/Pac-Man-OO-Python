@@ -78,49 +78,87 @@ class Player(Character):
                 self.setDirection_comand(2)  # Baixo
             elif event.key == pygame.K_UP:
                 self.setDirection_comand(3)  # Cima
-            if event.key == pygame.K_SPACE and (self.game_won or self.player_game_over):
-                   if event.key == pygame.K_SPACE and (self.game_won or self.player_game_over):
-                        # Reseta o estado do jogo
-                        self.game_won = False
-                        self.player_game_over = False
-                        self.__collision_detected = False
-                        self.setStartup_counter(0)
-                        self.setPowerup(False)
-                        self.setPower_count(0)
-                        self.setCharacter_x(450)
-                        self.setCharacter_y(663)
-                        self.setDirection(0)
-                        self.setDirection_comand(0)
-                        
-                        # Reseta os fantasmas
-                        blink.setCharacter_x(56)
-                        blink.setCharacter_y(58)
-                        blink.setDirection(0)
-                        ink.setCharacter_x(440)
-                        ink.setCharacter_y(388)
-                        ink.setDirection(2)
-                        pink.setCharacter_x(440)
-                        pink.setCharacter_y(438)
-                        pink.setDirection(2)
-                        clyde.setCharacter_x(440)
-                        clyde.setCharacter_y(438)
-                        clyde.setDirection(2)
-                        
-                        # Reseta os estados dos fantasmas
-                        blink.setEaten(False)
-                        ink.setEaten(False)
-                        pink.setEaten(False)
-                        clyde.setEaten(False)
-                        blink.setDead(False)
-                        ink.setDead(False)
-                        pink.setDead(False)
-                        clyde.setDead(False)
-                        
-                        # Reseta a pontuação e vidas
-                        self.scoreManager.setScore(0)
-                        self.setLives(3)
-                        self.tile.setLevel(gamemap)  # Reinicializa o mapa
-                        print("Game reiniciado")
+            if event.key == pygame.K_SPACE and self.player_game_over:
+                # Reseta o estado do jogo
+                self.game_won = False
+                self.player_game_over = False
+                self.__collision_detected = False
+                self.setStartup_counter(0)
+                self.setPowerup(False)
+                self.setPower_count(0)
+                self.setCharacter_x(450)
+                self.setCharacter_y(663)
+                self.setDirection(0)
+                self.setDirection_comand(0)
+                
+                # Reseta os fantasmas
+                blink.setCharacter_x(56)
+                blink.setCharacter_y(58)
+                blink.setDirection(0)
+                ink.setCharacter_x(440)
+                ink.setCharacter_y(388)
+                ink.setDirection(2)
+                pink.setCharacter_x(440)
+                pink.setCharacter_y(438)
+                pink.setDirection(2)
+                clyde.setCharacter_x(440)
+                clyde.setCharacter_y(438)
+                clyde.setDirection(2)
+                
+                # Reseta os estados dos fantasmas
+                blink.setEaten(False)
+                ink.setEaten(False)
+                pink.setEaten(False)
+                clyde.setEaten(False)
+                blink.setDead(False)
+                ink.setDead(False)
+                pink.setDead(False)
+                clyde.setDead(False)
+                
+                # Reseta a pontuação e vidas
+                self.scoreManager.setScore(0)
+                self.setLives(4)
+                self.tile.setLevel(gamemap)  # Reinicializa o mapa
+                print("Game reiniciado")
+            if event.key == pygame.K_SPACE and self.game_won:
+                self.game_won = False
+                self.player_game_over = False
+                self.__collision_detected = False
+                self.setStartup_counter(0)
+                self.setPowerup(False)
+                self.setPower_count(0)
+                self.setCharacter_x(450)
+                self.setCharacter_y(663)
+                self.setDirection(0)
+                self.setDirection_comand(0)
+                
+                # Reseta os fantasmas
+                blink.setCharacter_x(56)
+                blink.setCharacter_y(58)
+                blink.setDirection(0)
+                ink.setCharacter_x(440)
+                ink.setCharacter_y(388)
+                ink.setDirection(2)
+                pink.setCharacter_x(440)
+                pink.setCharacter_y(438)
+                pink.setDirection(2)
+                clyde.setCharacter_x(440)
+                clyde.setCharacter_y(438)
+                clyde.setDirection(2)
+                
+                # Reseta os estados dos fantasmas
+                blink.setEaten(False)
+                ink.setEaten(False)
+                pink.setEaten(False)
+                clyde.setEaten(False)
+                blink.setDead(False)
+                ink.setDead(False)
+                pink.setDead(False)
+                clyde.setDead(False)
+                
+                # Reseta a pontuação e vidas
+                self.tile.setLevel(gamemap)  # Reinicializa o mapa
+                print("Game reiniciado")
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT and self.getDirection_comand() == 0:
                 self.setDirection_comand(self.getDirection())
@@ -206,8 +244,9 @@ class Player(Character):
             turns[1] = True
         #print(centerx)
         return turns
-    #Passar ghost como parametro
-    def check_colision(self, ): 
+
+
+    def check_colision(self): 
         if 0 < self.getCharacter_x() < 870:
             if self.tile.getLevel()[self.getCenter_y() // self.tile.getNum1()][self.getCenter_x() // self.tile.getNum2()] == 1:
                 self.tile.getLevel()[self.getCenter_y() // self.tile.getNum1()][self.getCenter_x() // self.tile.getNum2()] = 0
@@ -287,7 +326,7 @@ class Player(Character):
                         self.setMoving(False)
                         self.setStartup_counter(0)
             if self.getPowerup() and playerhitbox.colliderect(blink.getRect()) and blink.getEaten() and not blink.getDead():
-                if self.getLives() > 0:
+                    if self.getLives() > 0:
                         self.setStartup_counter(0)
                         self.setLives(self.getLives() - 1)
                         self.setPowerup(False)
@@ -317,115 +356,115 @@ class Player(Character):
                         pink.setDead(False)
                         clyde.setDead(False)
                         self.__collision_detected = True
-                else:
+                    else:
                         self.player_game_over = True
                         self.setMoving(False)
                         self.setStartup_counter(0)
             if self.getPowerup() and playerhitbox.colliderect(ink.getRect()) and ink.getEaten() and not ink.getDead():
                 if self.getLives() > 0:
-                        self.setStartup_counter(0)
-                        self.setLives(self.getLives() - 1)
-                        self.setPowerup(False)
-                        self.setPower_count(0)
-                        self.setCharacter_x(450)
-                        self.setCharacter_y(663)
-                        self.setDirection(0)
-                        self.setDirection_comand(0)
-                        blink.setCharacter_x(56)
-                        blink.setCharacter_y(58)
-                        blink.setDirection(0)
-                        ink.setCharacter_x(440)
-                        ink.setCharacter_y(388)
-                        ink.setDirection(2)
-                        pink.setCharacter_x(440)
-                        pink.setCharacter_y(438)
-                        pink.setDirection(2)
-                        clyde.setCharacter_x(440)
-                        clyde.setCharacter_y(438)
-                        clyde.setDirection(2)
-                        blink.setEaten(False)
-                        ink.setEaten(False)
-                        pink.setEaten(False)
-                        clyde.setEaten(False)
-                        blink.setDead(False)
-                        ink.setDead(False)
-                        pink.setDead(False)
-                        clyde.setDead(False)
-                        self.__collision_detected = True
+                    self.setStartup_counter(0)
+                    self.setLives(self.getLives() - 1)
+                    self.setPowerup(False)
+                    self.setPower_count(0)
+                    self.setCharacter_x(450)
+                    self.setCharacter_y(663)
+                    self.setDirection(0)
+                    self.setDirection_comand(0)
+                    blink.setCharacter_x(56)
+                    blink.setCharacter_y(58)
+                    blink.setDirection(0)
+                    ink.setCharacter_x(440)
+                    ink.setCharacter_y(388)
+                    ink.setDirection(2)
+                    pink.setCharacter_x(440)
+                    pink.setCharacter_y(438)
+                    pink.setDirection(2)
+                    clyde.setCharacter_x(440)
+                    clyde.setCharacter_y(438)
+                    clyde.setDirection(2)
+                    blink.setEaten(False)
+                    ink.setEaten(False)
+                    pink.setEaten(False)
+                    clyde.setEaten(False)
+                    blink.setDead(False)
+                    ink.setDead(False)
+                    pink.setDead(False)
+                    clyde.setDead(False)
+                    self.__collision_detected = True
                 else:
-                        self.player_game_over = True
-                        self.setMoving(False)
-                        self.setStartup_counter(0)
+                    self.player_game_over = True
+                    self.setMoving(False)
+                    self.setStartup_counter(0)
             if self.getPowerup() and playerhitbox.colliderect(pink.getRect()) and pink.getEaten() and not pink.getDead():
                 if self.getLives() > 0:
-                        self.setStartup_counter(0)
-                        self.setLives(self.getLives() - 1)
-                        self.setPowerup(False)
-                        self.setPower_count(0)
-                        self.setCharacter_x(450)
-                        self.setCharacter_y(663)
-                        self.setDirection(0)
-                        self.setDirection_comand(0)
-                        blink.setCharacter_x(56)
-                        blink.setCharacter_y(58)
-                        blink.setDirection(0)
-                        ink.setCharacter_x(440)
-                        ink.setCharacter_y(388)
-                        ink.setDirection(2)
-                        pink.setCharacter_x(440)
-                        pink.setCharacter_y(438)
-                        pink.setDirection(2)
-                        clyde.setCharacter_x(440)
-                        clyde.setCharacter_y(438)
-                        clyde.setDirection(2)
-                        blink.setEaten(False)
-                        ink.setEaten(False)
-                        pink.setEaten(False)
-                        clyde.setEaten(False)
-                        blink.setDead(False)
-                        ink.setDead(False)
-                        pink.setDead(False)
-                        clyde.setDead(False)
-                        self.__collision_detected = True
+                    self.setStartup_counter(0)
+                    self.setLives(self.getLives() - 1)
+                    self.setPowerup(False)
+                    self.setPower_count(0)
+                    self.setCharacter_x(450)
+                    self.setCharacter_y(663)
+                    self.setDirection(0)
+                    self.setDirection_comand(0)
+                    blink.setCharacter_x(56)
+                    blink.setCharacter_y(58)
+                    blink.setDirection(0)
+                    ink.setCharacter_x(440)
+                    ink.setCharacter_y(388)
+                    ink.setDirection(2)
+                    pink.setCharacter_x(440)
+                    pink.setCharacter_y(438)
+                    pink.setDirection(2)
+                    clyde.setCharacter_x(440)
+                    clyde.setCharacter_y(438)
+                    clyde.setDirection(2)
+                    blink.setEaten(False)
+                    ink.setEaten(False)
+                    pink.setEaten(False)
+                    clyde.setEaten(False)
+                    blink.setDead(False)
+                    ink.setDead(False)
+                    pink.setDead(False)
+                    clyde.setDead(False)
+                    self.__collision_detected = True
                 else:
-                        self.player_game_over = True
-                        self.setMoving(False)
-                        self.setStartup_counter(0)
+                    self.player_game_over = True
+                    self.setMoving(False)
+                    self.setStartup_counter(0)
             if self.getPowerup() and playerhitbox.colliderect(clyde.getRect()) and clyde.getEaten() and not clyde.getDead():
                 if self.getLives() > 0:
-                        self.setStartup_counter(0)
-                        self.setLives(self.getLives() - 1)
-                        self.setPowerup(False)
-                        self.setPower_count(0)
-                        self.setCharacter_x(450)
-                        self.setCharacter_y(663)
-                        self.setDirection(0)
-                        self.setDirection_comand(0)
-                        blink.setCharacter_x(56)
-                        blink.setCharacter_y(58)
-                        blink.setDirection(0)
-                        ink.setCharacter_x(440)
-                        ink.setCharacter_y(388)
-                        ink.setDirection(2)
-                        pink.setCharacter_x(440)
-                        pink.setCharacter_y(438)
-                        pink.setDirection(2)
-                        clyde.setCharacter_x(440)
-                        clyde.setCharacter_y(438)
-                        clyde.setDirection(2)
-                        blink.setEaten(False)
-                        ink.setEaten(False)
-                        pink.setEaten(False)
-                        clyde.setEaten(False)
-                        blink.setDead(False)
-                        ink.setDead(False)
-                        pink.setDead(False)
-                        clyde.setDead(False)
-                        self.__collision_detected = True
+                    self.setStartup_counter(0)
+                    self.setLives(self.getLives() - 1)
+                    self.setPowerup(False)
+                    self.setPower_count(0)
+                    self.setCharacter_x(450)
+                    self.setCharacter_y(663)
+                    self.setDirection(0)
+                    self.setDirection_comand(0)
+                    blink.setCharacter_x(56)
+                    blink.setCharacter_y(58)
+                    blink.setDirection(0)
+                    ink.setCharacter_x(440)
+                    ink.setCharacter_y(388)
+                    ink.setDirection(2)
+                    pink.setCharacter_x(440)
+                    pink.setCharacter_y(438)
+                    pink.setDirection(2)
+                    clyde.setCharacter_x(440)
+                    clyde.setCharacter_y(438)
+                    clyde.setDirection(2)
+                    blink.setEaten(False)
+                    ink.setEaten(False)
+                    pink.setEaten(False)
+                    clyde.setEaten(False)
+                    blink.setDead(False)
+                    ink.setDead(False)
+                    pink.setDead(False)
+                    clyde.setDead(False)
+                    self.__collision_detected = True
                 else:
-                        self.player_game_over = True
-                        self.setMoving(False)
-                        self.setStartup_counter(0)
+                    self.player_game_over = True
+                    self.setMoving(False)
+                    self.setStartup_counter(0)
             if self.getPowerup() and playerhitbox.colliderect(blink.getRect()) and not blink.getDead() and not blink.getEaten():
                 blink.setDead(True)
                 blink.setEaten(True)
@@ -456,4 +495,5 @@ class Player(Character):
                 eat_ghost.play()
         else:
             self.reset_collision()
+        #self.update_game_ovver()
         

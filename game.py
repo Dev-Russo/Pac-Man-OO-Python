@@ -92,15 +92,16 @@ class Game:
                     self.blinky.move_ghost(True)
             
             self.player.powerup_up_and_start_game()
-            self.player.player_and_ghost_collision(self.blinky, self.inky, self.pinky, self.clyde, player_circle)
-            self.player.check_colision()
-            
             
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.setRun(False)
                 self.player.check_keyboard(event, self.blinky, self.inky, self.pinky, self.clyde)
             self.player.change_direction()
+            
+            self.player.player_and_ghost_collision(self.blinky, self.inky, self.pinky, self.clyde, player_circle)
+            self.player.check_colision()
+            
             
             self.blinky.no_longer_dead(self.player)
             self.inky.no_longer_dead(self.player)
