@@ -1,5 +1,7 @@
 import pygame
 import math
+import copy
+from gamemap import *
 
 LARGURA = 900
 ALTURA = 950
