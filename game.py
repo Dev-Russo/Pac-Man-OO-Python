@@ -53,6 +53,13 @@ class Game:
             self.pinky.draw(self.getScreen(), self.player)
             self.inky.draw(self.getScreen(), self.player)
             self.blinky.draw(self.getScreen(), self.player)
+            
+            self.player.game_won = True
+            for i in range(len(self.tile.getLevel())):
+                # Verifica se 1 ou 2 estão presentes na linha do mapa
+                if 1 in self.tile.getLevel()[i] or 2 in self.tile.getLevel()[i]:
+                    self.player.game_won = False
+                    break  # Se encontrou 1 ou 2, já pode sair do loop
              
             player_circle = pygame.draw.circle(self.getScreen(), 'black', (self.player.getCenter_x(), self.player.getCenter_y()), 16, 2)
             self.player.draw_player(PLAYER_IMAGES)  
@@ -136,6 +143,45 @@ class Game:
                         # Reseta a pontuação e vidas
                         self.player.scoreManager.setScore(0)
                         self.player.setLives(4)
+                        self.tile.setLevel(copy.deepcopy(original_map))  # Reinicializa o mapa
+                        print("Game reiniciado")
+                    if event.key == pygame.K_SPACE and self.player.game_won:
+                        self.player.game_won = False
+                        self.player.player_game_over = False
+                        self.player.__collision_detected = False
+                        self.player.setStartup_counter(0)
+                        self.player.setPowerup(False)
+                        self.player.setPower_count(0)
+                        self.player.setCharacter_x(450)
+                        self.player.setCharacter_y(663)
+                        self.player.setDirection(0)
+                        self.player.setDirection_comand(0)
+                        
+                        # Reseta os fantasmas
+                        self.blinky.setCharacter_x(56)
+                        self.blinky.setCharacter_y(58)
+                        self.blinky.setDirection(0)
+                        self.inky.setCharacter_x(440)
+                        self.inky.setCharacter_y(388)
+                        self.inky.setDirection(2)
+                        self.pinky.setCharacter_x(440)
+                        self.pinky.setCharacter_y(438)
+                        self.pinky.setDirection(2)
+                        self.clyde.setCharacter_x(440)
+                        self.clyde.setCharacter_y(438)
+                        self.clyde.setDirection(2)
+                        
+                        # Reseta os estados dos fantasmas
+                        self.blinky.setEaten(False)
+                        self.inky.setEaten(False)
+                        self.pinky.setEaten(False)
+                        self.clyde.setEaten(False)
+                        self.blinky.setDead(False)
+                        self.inky.setDead(False)
+                        self.pinky.setDead(False)
+                        self.clyde.setDead(False)
+                        
+                        # Reseta a pontuação e vidas
                         self.tile.setLevel(copy.deepcopy(original_map))  # Reinicializa o mapa
                         print("Game reiniciado")
                 if event.type == pygame.QUIT:
